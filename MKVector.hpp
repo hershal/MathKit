@@ -1,7 +1,4 @@
-/*! MathKit Vector Header Class */
-
-#ifndef MK_VECTOR_H
-#define MK_VECTOR_H
+/*! MathKit Vector Class */
 
 #include <iostream>
 #include <vector>
@@ -9,25 +6,76 @@
 template <typename T>
 class MKVector {
 public:
-    MKVector(std::size_t = 0);
-    MKVector(const MKVector&);
-    ~MKVector();
+    MKVector(size_t n){ //constructor 
+        array.resize(n);
+    }
 
-    auto operator() (size_t) const -> const T; //! get-value index operator
-    auto operator() (size_t) -> T&; //! set-value index operator
+    ~MKVector(){ //destructor 
+        // Don't need to delete anything
+    }
 
-    auto operator=(const MKVector&) -> MKVector&; //! equate-two-vecs operator
-    auto operator=(T) -> MKVector&;        //! fill-vec-by-scalar operator
-    auto operator+(const MKVector&) -> MKVector;  //! add-two-vecs operator
-    auto operator-(const MKVector&) -> MKVector;  //! subtract-two-vecs operator
+    MKVector(const MKVector& v) { //copy constructor
+        array = v.to_vector();
+    }
 
-    auto to_vector() const -> const std::vector<T>;
-    auto to_string(std::string sep = ", ") -> const std::string;
-    auto size() -> const std::size_t;
+    auto to_vector() const -> const std::vector<T> {
+        return array;
+    }
 
+    auto to_string(std::string sep = ", ") -> const std::string {
+        std::string out;
+        for (auto i=0; i<size(); ++i) {
+            if (i != 0) { out += sep; }
+            out += std::to_string(array[i]);
+        }
+        return out;
+    }
+
+    auto size() -> const std::size_t {
+        return array.size();
+    }
+
+    auto operator() (std::size_t i) const -> const double { //get-value operator
+        if(i<0 || i>=size())
+            std::cerr << "MKVector index is invalid\n";
+        return array[i]; 
+    }
+
+    auto operator() (int i) -> double& { //set-value operator
+        if(i<0 || i>=size())
+            std::cerr << "MKVector index is invalid\n";
+        return array[i]; 
+    }
+
+    auto operator= (const MKVector& v) -> MKVector& { //equate-two-vecs operator
+        array = v.to_vector();
+        return *this;
+    }
+
+    auto operator= (double x) -> MKVector& { //fill-vec-by-scalar operator
+        for(int i=0; i<size(); i++) {
+            array[i] = x;
+        }
+        return *this;
+    }
+
+    auto operator+ (const MKVector& v) -> MKVector { //add-two-vecs operator
+        if(size() != v.size()) {
+            std::cerr << "MKVector addition undefined -- sizes differ\n";
+        }
+        MKVector sum(size());
+        for(int i=0; i<size(); i++) sum.array[i] = array[i] + v.array[i];
+        return sum;
+    }
+
+    auto operator- (const MKVector& v) -> MKVector { //subtract-two-vecs operator
+        if(size() != v.size)
+            std::cerr << "MKVector subtraction undefined -- sizes differ\n";
+        MKVector difference(size());
+        for(int i=0; i<size(); i++) difference.array[i] = array[i] - v.array[i];
+        return difference;
+    }
 private:
     std::vector<T> array; //pointer to elements of MKVector
+
 };
-
-#endif // MK_VECTOR_H
-

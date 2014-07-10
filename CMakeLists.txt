@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 set (CMAKE_CXX_FLAGS "-std=c++11 -stdlib=libc++")
 set (T_MKArgument-src T_MKArgument.cpp)
-set (T_MKVector-src T_MKVector.cpp MKVector.cpp)
+set (T_MKVector-src T_MKVector.cpp)
 # add_library (MathKit-src INTERFACE ${MathKit-src})
 add_executable (t_mkargument ${T_MKArgument-src})
 add_executable (t_mkvector ${T_MKVector-src})
