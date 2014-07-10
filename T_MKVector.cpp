@@ -10,7 +10,7 @@
 
 #include "MKVector.hpp"
 
-void run_test();
+void run_random_insertion_test();
 
 int main() {
     std::size_t len = 10;
