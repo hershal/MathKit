@@ -6,11 +6,11 @@
 template <typename T>
 class MKVector {
 public:
-    MKVector(size_t n){ //constructor 
+    MKVector(size_t n){ //constructor
         array.resize(n);
     }
 
-    ~MKVector(){ //destructor 
+    ~MKVector(){ //destructor
         // Don't need to delete anything
     }
 
@@ -37,14 +37,16 @@ public:
 
     auto operator() (std::size_t i) const -> const double { //get-value operator
         if(i<0 || i>=size())
-            std::cerr << "MKVector index is invalid\n";
-        return array[i]; 
+            throw std::out_of_range("MKVector index is invalid (" +
+                                    std::to_string(i) + ">" + std::to_string(size()));
+        return array[i];
     }
 
     auto operator() (int i) -> double& { //set-value operator
         if(i<0 || i>=size())
-            std::cerr << "MKVector index is invalid\n";
-        return array[i]; 
+            throw std::out_of_range("MKVector index is invalid (" +
+                                    std::to_string(i) + ">" + std::to_string(size()));
+        return array[i];
     }
 
     auto operator= (const MKVector& v) -> MKVector& { //equate-two-vecs operator
