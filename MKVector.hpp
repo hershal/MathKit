@@ -36,16 +36,16 @@ public:
     }
 
     auto operator() (std::size_t i) const -> const double { //get-value operator
-        if(i<0 || i>=size())
-            throw std::out_of_range("MKVector index is invalid (" +
-                                    std::to_string(i) + ">" + std::to_string(size()));
+        if(i<0 || i>=size()) {
+            throw std::out_of_range("MKVector index is invalid");
+        }
         return array[i];
     }
 
-    auto operator() (int i) -> double& { //set-value operator
-        if(i<0 || i>=size())
-            throw std::out_of_range("MKVector index is invalid (" +
-                                    std::to_string(i) + ">" + std::to_string(size()));
+    auto operator() (std::size_t i) -> double& { //set-value operator
+        if(i<0 || i>=size()) {
+            throw std::out_of_range("MKVector index is invalid");
+        }
         return array[i];
     }
 
