@@ -79,5 +79,4 @@ public:
     }
 private:
     std::vector<T> array; //pointer to elements of MKVector
-
 };

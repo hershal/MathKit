@@ -32,9 +32,11 @@ void run_random_insertion_test() {
         double value = (double)(rand());
         try {
             v(loc) = value;
-            BOOST_ASSERT_MSG(v(loc) == value, (std::stringstream() << value << "!=" << v(i)).str().c_str());
+            BOOST_ASSERT_MSG(v(loc) == value,
+                             (std::stringstream() << value << "!=" << v(i)).str().c_str());
         } catch (std::out_of_range e) {
-            BOOST_ASSERT_MSG(loc >= len, (std::stringstream() << loc << ">=" << len).str().c_str());
+            BOOST_ASSERT_MSG(loc >= len,
+                             (std::stringstream() << loc << ">=" << len).str().c_str());
         }
     }
 }
