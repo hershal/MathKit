@@ -14,6 +14,7 @@
 const std::string k_num_misses = "k_num_misses";
 const std::string k_num_hits = "k_num_hits";
 const std::string k_num_total = "k_num_total";
+
 typedef std::map<std::string, std::size_t> attribute_t;
 typedef std::shared_ptr< std::map<std::string, std::size_t> > attribute_t_ptr;
 
@@ -32,12 +33,14 @@ std::string string_results(std::string sep1,
 
 int main() {
     std::size_t len = 100;
-    auto tot = std::make_shared<attribute_t>();
 
+    auto insertion_test_results = std::make_shared<attribute_t>();
     for (auto i=0; i<len; ++i) {
-        tot = accumulate_results
-            (random_insertion_test(10000, 100000, 0.25), tot);
+        insertion_test_results = accumulate_results
+            (random_insertion_test(10000, 100000, 0.25), insertion_test_results);
     }
+    std::cout << string_results("=", "\n", insertion_test_results) << std::endl;
+
 
     std::cout << string_results("=", "\n", tot) << std::endl;
 }
@@ -45,7 +48,6 @@ int main() {
 attribute_t_ptr random_insertion_test(std::size_t vector_len,
                                       std::size_t num_insertions,
                                       float percentage_out_of_bounds) {
-
     std::srand(std::time(0));
     std::size_t num_hits = 0;
     std::size_t num_misses = 0;
