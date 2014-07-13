@@ -39,10 +39,9 @@ int main() {
         insertion_test_results = accumulate_results
             (random_insertion_test(10000, 100000, 0.25), insertion_test_results);
     }
-    std::cout << string_results("=", "\n", insertion_test_results) << std::endl;
+    std::cout << string_results("=", "\n", insertion_test_results) << "\n" << std::endl;
 
 
-    std::cout << string_results("=", "\n", tot) << std::endl;
 }
 
 attribute_t_ptr random_insertion_test(std::size_t vector_len,
