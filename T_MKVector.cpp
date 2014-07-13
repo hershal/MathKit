@@ -17,13 +17,18 @@ const std::string k_num_total = "k_num_total";
 typedef std::map<std::string, std::size_t> attribute_t;
 typedef std::shared_ptr< std::map<std::string, std::size_t> > attribute_t_ptr;
 
-attribute_t_ptr accumulate_results(attribute_t_ptr augend, attribute_t_ptr addend);
-attribute_t_ptr assemble_test_results(std::size_t hits, std::size_t misses, std::size_t total);
-attribute_t_ptr run_random_insertion_test_out_of_bounds(std::size_t vector_len,
-                                                        std::size_t num_insertions,
-                                                        float percentage_out_of_bounds);
+attribute_t_ptr accumulate_results(attribute_t_ptr augend,
+                                   attribute_t_ptr addend);
+attribute_t_ptr assemble_test_results(std::size_t hits,
+                                      std::size_t misses,
+                                      std::size_t total);
+attribute_t_ptr random_insertion_test(std::size_t vector_len,
+                                      std::size_t num_insertions,
+                                      float percentage_out_of_bounds);
 
-std::string string_results(std::string sep1, std::string sep2, attribute_t_ptr attrib);
+std::string string_results(std::string sep1,
+                           std::string sep2,
+                           attribute_t_ptr attrib);
 
 int main() {
     std::size_t len = 100;
@@ -31,16 +36,15 @@ int main() {
 
     for (auto i=0; i<len; ++i) {
         tot = accumulate_results
-            (run_random_insertion_test_out_of_bounds
-             (10000, 100000, 0.25), tot);
+            (random_insertion_test(10000, 100000, 0.25), tot);
     }
 
     std::cout << string_results("=", "\n", tot) << std::endl;
 }
 
-attribute_t_ptr run_random_insertion_test_out_of_bounds(std::size_t vector_len,
-                                                        std::size_t num_insertions,
-                                                        float percentage_out_of_bounds) {
+attribute_t_ptr random_insertion_test(std::size_t vector_len,
+                                      std::size_t num_insertions,
+                                      float percentage_out_of_bounds) {
 
     std::srand(std::time(0));
     std::size_t num_hits = 0;
