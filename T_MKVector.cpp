@@ -23,6 +23,7 @@ attribute_t_ptr accumulate_results(attribute_t_ptr augend,
 attribute_t_ptr assemble_test_results(std::size_t hits,
                                       std::size_t misses,
                                       std::size_t total);
+attribute_t_ptr addition_test(std::size_t vector_len);
 attribute_t_ptr random_insertion_test(std::size_t vector_len,
                                       std::size_t num_insertions,
                                       float percentage_out_of_bounds);
@@ -41,7 +42,38 @@ int main() {
     }
     std::cout << string_results("=", "\n", insertion_test_results) << "\n" << std::endl;
 
+    auto addition_test_results = std::make_shared<attribute_t>();
+    for (auto i=0; i<len; ++i) {
+        addition_test_results = accumulate_results
+            (addition_test(10000), addition_test_results);
+    }
+    std::cout << string_results("=", "\n", addition_test_results) << "\n" << std::endl;
+}
 
+attribute_t_ptr addition_test(std::size_t vector_len) {
+    std::srand(std::time(0));
+
+    MKVector <float> v1(vector_len);
+    MKVector <float> v2(vector_len);
+
+    /* Populate the vector here */
+    for (auto i=0; i<vector_len; ++i) {
+        v1(i) = (float)(rand());
+        v2(i) = (float)(rand());
+    }
+
+    /* Perform the addition */
+    MKVector <float> v3 = v1 + v2;
+
+    for (auto i=0; i<vector_len; ++i) {
+        BOOST_ASSERT_MSG
+            (v3(i) == v1(i) + v2(i),
+             (std::stringstream() << v3(i) << "!=" << v1(i) << " + " << v2(i))
+             .str().c_str());
+    }
+    auto m = std::make_shared<attribute_t>();
+    (*m)[k_num_total] = vector_len;
+    return m;
 }
 
 attribute_t_ptr random_insertion_test(std::size_t vector_len,
