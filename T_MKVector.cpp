@@ -72,9 +72,9 @@ attribute_t_ptr random_insertion_test(std::size_t vector_len,
     }
 
     auto m = std::make_shared<attribute_t>();
-    (*m)[k_num_misses] = misses;
-    (*m)[k_num_hits] = hits;
-    (*m)[k_num_total] = total;
+    (*m)[k_num_misses] = num_misses;
+    (*m)[k_num_hits] = num_hits;
+    (*m)[k_num_total] = num_insertions;
     return m;
 }
 
