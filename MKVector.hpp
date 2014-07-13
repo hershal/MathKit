@@ -6,7 +6,7 @@
 template <typename T>
 class MKVector {
 public:
-    MKVector(size_t n){ //constructor
+    MKVector(std::size_t n){ //constructor
         array.resize(n);
     }
 
@@ -35,14 +35,14 @@ public:
         return array.size();
     }
 
-    auto operator() (std::size_t i) const -> const double { //get-value operator
+    auto operator() (std::size_t i) const -> const T { //get-value operator
         if(i<0 || i>=size()) {
             throw std::out_of_range("MKVector index is invalid");
         }
         return array[i];
     }
 
-    auto operator() (std::size_t i) -> double& { //set-value operator
+    auto operator() (std::size_t i) -> T& { //set-value operator
         if(i<0 || i>=size()) {
             throw std::out_of_range("MKVector index is invalid");
         }
@@ -54,7 +54,7 @@ public:
         return *this;
     }
 
-    auto operator= (double x) -> MKVector& { //fill-vec-by-scalar operator
+    auto operator= (T x) -> MKVector& { //fill-vec-by-scalar operator
         for(int i=0; i<size(); i++) {
             array[i] = x;
         }
