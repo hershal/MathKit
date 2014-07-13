@@ -70,12 +70,7 @@ attribute_t_ptr random_insertion_test(std::size_t vector_len,
             num_misses++;
         }
     }
-    return assemble_test_results(num_hits, num_misses, num_insertions);
-}
 
-attribute_t_ptr assemble_test_results(std::size_t hits,
-                                      std::size_t misses,
-                                      std::size_t total) {
     auto m = std::make_shared<attribute_t>();
     (*m)[k_num_misses] = misses;
     (*m)[k_num_hits] = hits;
