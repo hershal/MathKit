@@ -17,7 +17,7 @@ const std::string k_num_total = "k_num_total";
 typedef std::map<std::string, std::size_t> attribute_t;
 typedef std::shared_ptr< std::map<std::string, std::size_t> > attribute_t_ptr;
 
-attribute_t_ptr accumulate_results(attribute_t_ptr addend, attribute_t_ptr augend);
+attribute_t_ptr accumulate_results(attribute_t_ptr augend, attribute_t_ptr addend);
 attribute_t_ptr assemble_test_results(std::size_t hits, std::size_t misses, std::size_t total);
 attribute_t_ptr run_random_insertion_test_out_of_bounds(std::size_t vector_len,
                                                         std::size_t num_insertions,
@@ -79,11 +79,11 @@ attribute_t_ptr assemble_test_results(std::size_t hits,
     return m;
 }
 
-attribute_t_ptr accumulate_results(attribute_t_ptr addend,
-                                   attribute_t_ptr augend) {
+attribute_t_ptr accumulate_results(attribute_t_ptr augend,
+                                   attribute_t_ptr addend) {
     auto accum = std::make_shared<attribute_t>();
-    for (auto at : *addend) {
-        (*accum)[at.first] = at.second + (*augend)[at.first];
+    for (auto at : *augend) {
+        (*accum)[at.first] = at.second + (*addend)[at.first];
     }
     return accum;
 }
