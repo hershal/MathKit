@@ -65,12 +65,15 @@ attribute_t_ptr addition_test(std::size_t vector_len) {
     /* Perform the addition */
     MKVector <float> v3 = v1 + v2;
 
+    /* Verify output */
     for (auto i=0; i<vector_len; ++i) {
         BOOST_ASSERT_MSG
             (v3(i) == v1(i) + v2(i),
              (std::stringstream() << v3(i) << "!=" << v1(i) << " + " << v2(i))
              .str().c_str());
     }
+
+    /* Generate result receipt */
     auto m = std::make_shared<attribute_t>();
     (*m)[k_num_total] = vector_len;
     return m;
@@ -85,11 +88,18 @@ attribute_t_ptr random_insertion_test(std::size_t vector_len,
 
     MKVector<float> v(vector_len);
 
+    /* Perform the test */
     for (std::size_t i=0; i<num_insertions; ++i) {
+
+        /* Randomize insertion location */
         std::size_t loc =
             (std::size_t)((rand()%vector_len)
                           + (vector_len*percentage_out_of_bounds));
+
+        /* Randomize insertion data */
         float value = (float)(rand());
+
+        /* Verify insertion mechanisms */
         try {
             v(loc) = value;
             BOOST_ASSERT_MSG(v(loc) == value,
@@ -104,6 +114,7 @@ attribute_t_ptr random_insertion_test(std::size_t vector_len,
         }
     }
 
+    /* Generate result receipt */
     auto m = std::make_shared<attribute_t>();
     (*m)[k_num_misses] = num_misses;
     (*m)[k_num_hits] = num_hits;
