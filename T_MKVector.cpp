@@ -47,7 +47,7 @@ attribute_t_ptr run_random_insertion_test_out_of_bounds(std::size_t vector_len,
     std::size_t num_hits = 0;
     std::size_t num_misses = 0;
 
-    MKVector<double> v(vector_len);
+    MKVector<float> v(vector_len);
 
     for (std::size_t i=0; i<num_insertions; ++i) {
         std::size_t loc = (std::size_t)((rand()%vector_len) + (vector_len*percentage_out_of_bounds));
