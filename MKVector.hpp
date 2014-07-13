@@ -63,7 +63,7 @@ public:
 
     auto operator+ (const MKVector& v) -> MKVector { //add-two-vecs operator
         if(size() != v.size()) {
-            std::cerr << "MKVector addition undefined -- sizes differ\n";
+            throw std::out_of_range("MKVector index is invalid");
         }
         MKVector sum(size());
         for(int i=0; i<size(); i++) sum.array[i] = array[i] + v.array[i];
@@ -72,7 +72,7 @@ public:
 
     auto operator- (const MKVector& v) -> MKVector { //subtract-two-vecs operator
         if(size() != v.size)
-            std::cerr << "MKVector subtraction undefined -- sizes differ\n";
+            throw std::out_of_range("MKVector index is invalid");
         MKVector difference(size());
         for(int i=0; i<size(); i++) difference.array[i] = array[i] - v.array[i];
         return difference;
