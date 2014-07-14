@@ -23,15 +23,13 @@ attribute_t_ptr accumulate_results(attribute_t_ptr augend,
 attribute_t_ptr assemble_test_results(std::size_t hits,
                                       std::size_t misses,
                                       std::size_t total);
+std::string string_results(std::string sep1, std::string sep2,
+                           attribute_t_ptr attrib);
 attribute_t_ptr arithmetic_test(std::size_t vector_len);
 attribute_t_ptr fused_arithmetic_assignment_test(std::size_t vector_len);
 attribute_t_ptr random_insertion_test(std::size_t vector_len,
                                       std::size_t num_insertions,
                                       float percentage_out_of_bounds);
-
-std::string string_results(std::string sep1,
-                           std::string sep2,
-                           attribute_t_ptr attrib);
 
 int main() {
     std::size_t len = 100;
@@ -59,7 +57,6 @@ int main() {
     }
     std::cout << "fused arithmetic-assignment test\n" <<
         string_results("=", "\n", fused_arithmetic_assignment_test_results) << "\n" << std::endl;
-
 }
 
 attribute_t_ptr fused_arithmetic_assignment_test(std::size_t vector_len) {
