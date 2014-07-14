@@ -6,22 +6,27 @@
 template <typename T>
 class MKVector {
 public:
-    MKVector(std::size_t n){ //constructor
+    /*! MKVector constructor with size */
+    MKVector(std::size_t n){
         array.resize(n);
     }
 
-    ~MKVector(){ //destructor
-        // Don't need to delete anything
+    /*! MKVector destructor */
+    ~MKVector() {
+        /* Don't need to delete, everything is local */
     }
 
-    MKVector(const MKVector& v) { //copy constructor
+    /*! MKVector copy constructor */
+    MKVector(const MKVector& v) {
         array = v.to_vector();
     }
 
+    /*! MKVector get-pure-std::vector method */
     auto to_vector() const -> const std::vector<T> {
         return array;
     }
 
+    /*! MKVector string printer */
     auto to_string(std::string sep = ", ") -> const std::string {
         std::string out;
         for (auto i=0; i<size(); ++i) {
@@ -31,37 +36,43 @@ public:
         return out;
     }
 
+    /*! MKVector get size */
     auto size() const -> const std::size_t {
         return array.size();
     }
 
-    auto operator() (std::size_t i) const -> const T { //get-value operator
+    /*! MKVector get-value operator */
+    auto operator() (std::size_t i) const -> const T {
         if(i<0 || i>=size()) {
             throw std::out_of_range("MKVector index is invalid");
         }
         return array[i];
     }
 
-    auto operator() (std::size_t i) -> T& { //set-value operator
+    /*! MKVector set-value operator */
+    auto operator() (std::size_t i) -> T& {
         if(i<0 || i>=size()) {
             throw std::out_of_range("MKVector index is invalid");
         }
         return array[i];
     }
 
-    auto operator= (const MKVector& v) -> MKVector& { //equate-two-vecs operator
+    /*! MKVector assignment operator */
+    auto operator= (const MKVector& v) -> MKVector& {
         array = v.to_vector();
         return *this;
     }
 
-    auto operator= (T x) -> MKVector& { //fill-vec-by-scalar operator
+    /*! MKVector fill-vector-with-scalar operator */
+    auto operator= (T x) -> MKVector& {
         for(int i=0; i<size(); i++) {
             array[i] = x;
         }
         return *this;
     }
 
-    auto operator+ (const MKVector& v) -> MKVector { //add-two-vecs operator
+    /*! MKVector addition operator */
+    auto operator+ (const MKVector& v) -> MKVector {
         if(size() != v.size()) {
             throw std::out_of_range("MKVector index is invalid");
         }
@@ -70,7 +81,8 @@ public:
         return sum;
     }
 
-    auto operator+= (const MKVector& v) -> MKVector& { //add-two-vecs operator
+    /*! MKVector fused addition-assignment operator */
+    auto operator+= (const MKVector& v) -> MKVector& {
         if(size() != v.size()) {
             throw std::out_of_range("MKVector index is invalid");
         }
@@ -78,7 +90,8 @@ public:
         return *this;
     }
 
-    auto operator- (const MKVector& v) -> MKVector { //subtract-two-vecs operator
+    /*! MKVector subtraction operator */
+    auto operator- (const MKVector& v) -> MKVector {
         if(size() != v.size)
             throw std::out_of_range("MKVector index is invalid");
         MKVector difference(size());
@@ -86,5 +99,6 @@ public:
         return difference;
     }
 private:
-    std::vector<T> array; //pointer to elements of MKVector
+    /*! pointer to elements of MKVector */
+    std::vector<T> array;
 };
