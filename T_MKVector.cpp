@@ -40,14 +40,16 @@ int main() {
         insertion_test_results = accumulate_results
             (random_insertion_test(10000, 100000, 0.25), insertion_test_results);
     }
-    std::cout << string_results("=", "\n", insertion_test_results) << "\n" << std::endl;
+    std::cout << "insertion test\n" <<
+        string_results("=", "\n", insertion_test_results) << "\n" << std::endl;
 
     auto addition_test_results = std::make_shared<attribute_t>();
     for (auto i=0; i<len; ++i) {
         addition_test_results = accumulate_results
             (addition_test(10000), addition_test_results);
     }
-    std::cout << string_results("=", "\n", addition_test_results) << "\n" << std::endl;
+    std::cout << "addition test\n" <<
+        string_results("=", "\n", addition_test_results) << "\n" << std::endl;
 }
 
 attribute_t_ptr addition_test(std::size_t vector_len) {
