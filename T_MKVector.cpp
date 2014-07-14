@@ -33,11 +33,19 @@ attribute_t_ptr random_insertion_test(std::size_t vector_len,
 
 int main() {
     std::size_t len = 100;
+    std::size_t vector_len = 10000;
+
+    std::size_t insertion_num_insertions = 100000;
+    float insertion_percentage_out_of_bounds = 0.25;
 
     auto insertion_test_results = std::make_shared<attribute_t>();
     for (auto i=0; i<len; ++i) {
-        insertion_test_results = accumulate_results
-            (random_insertion_test(10000, 100000, 0.25), insertion_test_results);
+        insertion_test_results =
+            accumulate_results(random_insertion_test
+                               (vector_len,
+                                insertion_num_insertions,
+                                insertion_percentage_out_of_bounds),
+                                insertion_test_results);
     }
     std::cout << "insertion test\n" <<
         string_results("=", "\n", insertion_test_results) << "\n" << std::endl;
@@ -45,7 +53,7 @@ int main() {
     auto arithmetic_test_results = std::make_shared<attribute_t>();
     for (auto i=0; i<len; ++i) {
         arithmetic_test_results = accumulate_results
-            (arithmetic_test(10000), arithmetic_test_results);
+            (arithmetic_test(vector_len), arithmetic_test_results);
     }
     std::cout << "arithmetic test\n" <<
         string_results("=", "\n", arithmetic_test_results) << "\n" << std::endl;
@@ -53,20 +61,24 @@ int main() {
     auto fused_arithmetic_assignment_test_results = std::make_shared<attribute_t>();
     for (auto i=0; i<len; ++i) {
         fused_arithmetic_assignment_test_results = accumulate_results
-            (fused_arithmetic_assignment_test(10000), fused_arithmetic_assignment_test_results);
+            (fused_arithmetic_assignment_test(vector_len),
+             fused_arithmetic_assignment_test_results);
     }
     std::cout << "fused arithmetic-assignment test\n" <<
-        string_results("=", "\n", fused_arithmetic_assignment_test_results) << "\n" << std::endl;
+        string_results("=", "\n", fused_arithmetic_assignment_test_results)
+              << "\n" << std::endl;
 }
 
 attribute_t_ptr fused_arithmetic_assignment_test(std::size_t vector_len) {
     std::srand(std::time(0));
 
     MKVector <float> v_const(vector_len);
+
     MKVector <float> v_add(vector_len);
     MKVector <float> v_sub(vector_len);
     MKVector <float> v_mul(vector_len);
     MKVector <float> v_div(vector_len);
+
     MKVector <float> v_test_add(vector_len);
     MKVector <float> v_test_sub(vector_len);
     MKVector <float> v_test_mul(vector_len);
@@ -125,7 +137,7 @@ attribute_t_ptr arithmetic_test(std::size_t vector_len) {
     MKVector <float> v1(vector_len);
     MKVector <float> v2(vector_len);
 
-    /* Populate the vector here */
+    /* Populate the vectors here */
     for (auto i=0; i<vector_len; ++i) {
         v1(i) = (float)(rand());
         v2(i) = (float)(rand());
