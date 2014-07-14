@@ -72,7 +72,7 @@ attribute_t_ptr fused_arithmetic_assignment_test(std::size_t vector_len) {
     MKVector <float> v_test_mul(vector_len);
     MKVector <float> v_test_div(vector_len);
 
-    /* Populate the test vector data and the verification vector data */
+    /* Populate the test vectors' data and the verification vectors' data */
     for (auto i=0; i<vector_len; ++i) {
         v_const(i) = (float)(rand());
 
