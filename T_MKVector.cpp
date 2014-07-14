@@ -28,7 +28,7 @@ auto random_insertion_test(std::size_t vector_len,
     -> std::shared_ptr<TKNumberedAttribute<std::size_t> >;
 
 int main() {
-    std::size_t len = 10;
+    std::size_t len = 100;
     std::size_t vector_len = 10000;
 
     std::size_t insertion_num_insertions = 100000;
