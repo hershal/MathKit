@@ -24,6 +24,7 @@ attribute_t_ptr assemble_test_results(std::size_t hits,
                                       std::size_t misses,
                                       std::size_t total);
 attribute_t_ptr addition_test(std::size_t vector_len);
+attribute_t_ptr fused_addition_test(std::size_t vector_len);
 attribute_t_ptr random_insertion_test(std::size_t vector_len,
                                       std::size_t num_insertions,
                                       float percentage_out_of_bounds);
@@ -33,7 +34,7 @@ std::string string_results(std::string sep1,
                            attribute_t_ptr attrib);
 
 int main() {
-    std::size_t len = 100;
+    std::size_t len = 10;
 
     auto insertion_test_results = std::make_shared<attribute_t>();
     for (auto i=0; i<len; ++i) {
@@ -50,6 +51,46 @@ int main() {
     }
     std::cout << "addition test\n" <<
         string_results("=", "\n", addition_test_results) << "\n" << std::endl;
+
+    auto fused_addition_test_results = std::make_shared<attribute_t>();
+    for (auto i=0; i<len; ++i) {
+        fused_addition_test_results = accumulate_results
+            (fused_addition_test(10000), fused_addition_test_results);
+    }
+    std::cout << "fused addition test\n" <<
+        string_results("=", "\n", fused_addition_test_results) << "\n" << std::endl;
+
+}
+
+attribute_t_ptr fused_addition_test(std::size_t vector_len) {
+    std::srand(std::time(0));
+
+    MKVector <float> v1(vector_len);
+    MKVector <float> v2(vector_len);
+    MKVector <float> v3_test(vector_len);
+
+    /* Populate the test vector data and the verification vector data */
+    for (auto i=0; i<vector_len; ++i) {
+        v1(i) = (float)(rand());
+        v2(i) = (float)(rand());
+        v3_test(i) = v1(i) + v2(i);
+    }
+
+    /* Perform the addition */
+    v1 += v2;
+
+    /* Verify output */
+    for (auto i=0; i<vector_len; ++i) {
+        BOOST_ASSERT_MSG
+            (v3_test(i) == v1(i),
+             (std::stringstream() << v3_test(i) << "!=" << v1(i))
+             .str().c_str());
+    }
+
+    /* Generate result receipt */
+    auto m = std::make_shared<attribute_t>();
+    (*m)[k_num_total] = vector_len;
+    return m;
 }
 
 attribute_t_ptr addition_test(std::size_t vector_len) {
