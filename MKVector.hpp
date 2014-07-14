@@ -36,10 +36,11 @@ public:
         return out;
     }
 
-    /*! MKVector get size */
-    auto size() const -> const std::size_t {
-        return array.size();
-    }
+    /*! MKVector get dimension (alias to size()) */
+    auto dim() const -> const std::size_t { return array.size(); }
+
+    /*! MKVector get size (alias to dim()) */
+    auto size() const -> const std::size_t { return array.size(); }
 
     /*! MKVector get-value operator */
     auto operator[] (const std::size_t i) const -> const T {
