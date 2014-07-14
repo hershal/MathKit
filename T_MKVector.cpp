@@ -47,7 +47,7 @@ int main() {
     /* Arithmetic Test */
     auto arithmetic_test_results = TKNumberedAttribute<std::size_t>();
     for (auto i=0; i<len; ++i) {
-        arithmetic_test_results = *(arithmetic_test(vector_len));
+        arithmetic_test_results += *(arithmetic_test(vector_len));
     }
     std::cout << "arithmetic test\n" <<
         arithmetic_test_results.to_string() << "\n" << std::endl;
