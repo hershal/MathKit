@@ -27,6 +27,10 @@ auto random_insertion_test(std::size_t vector_len,
                            float percentage_out_of_bounds)
     -> std::shared_ptr<TKNumberedAttribute<std::size_t> >;
 
+auto fill_test(std::size_t vector_len)
+    -> std::shared_ptr<TKNumberedAttribute<std::size_t> >;
+
+
 int main() {
     std::size_t len = 100;
     std::size_t vector_len = 10000;
@@ -43,6 +47,14 @@ int main() {
     }
     std::cout << "insertion test\n" <<
         insertion_test_results.to_string() << "\n" << std::endl;
+
+    /* Fill Test */
+    auto fill_test_results = TKNumberedAttribute<std::size_t>();
+    for (auto i=0; i<len; ++i) {
+        fill_test_results += *(fill_test(vector_len));
+    }
+    std::cout << "fill test\n" <<
+        fill_test_results.to_string() << "\n" << std::endl;
 
     /* Arithmetic Test */
     auto arithmetic_test_results = TKNumberedAttribute<std::size_t>();
@@ -214,5 +226,34 @@ auto random_insertion_test(std::size_t vector_len, std::size_t num_insertions,
     (*m)[k_num_misses] = num_misses;
     (*m)[k_num_hits] = num_hits;
     (*m)[k_num_total] = num_insertions;
+    return m;
+}
+
+auto fill_test(std::size_t vector_len)
+    -> std::shared_ptr<TKNumberedAttribute<std::size_t> > {
+
+    std::srand(std::time(0));
+
+    /* Create the vectors */
+    MKVector <float> v1(vector_len);
+    MKVector <float> v2(vector_len);
+
+    /* Populate the vector values */
+    float fill_value = (float)(rand());
+    v1 = fill_value;
+    for (auto i=0; i<vector_len; ++i) {
+        v2[i] = fill_value;
+    }
+
+    /* Verify output */
+    for (auto i=0; i<vector_len; ++i) {
+        BOOST_ASSERT_MSG(((v1[i] == v2[i]) && (v1[i] == fill_value)),
+                         (std::stringstream() << fill_value << "!=" << v1[i] << "!=" << v2[i])
+                         .str().c_str());
+    }
+
+    /* Generate result receipt */
+    auto m = std::make_shared<TKNumberedAttribute<std::size_t> >();
+    (*m)[k_num_total] = vector_len;
     return m;
 }
