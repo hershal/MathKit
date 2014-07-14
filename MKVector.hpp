@@ -57,7 +57,10 @@ public:
         return array[i];
     }
 
+    /*! MKVector get-value operator */
     auto operator() (const std::size_t i) const -> const T { return (*this)[i]; }
+
+    /*! MKVector set-value operator */
     auto operator() (const std::size_t i) -> T& { return (*this)[i]; }
 
     /*! MKVector assignment operator */
