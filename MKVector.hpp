@@ -42,7 +42,7 @@ public:
     }
 
     /*! MKVector get-value operator */
-    auto operator() (std::size_t i) const -> const T {
+    auto operator[] (const std::size_t i) const -> const T {
         if(i<0 || i>=size()) {
             throw std::out_of_range("MKVector index is invalid");
         }
@@ -50,12 +50,15 @@ public:
     }
 
     /*! MKVector set-value operator */
-    auto operator() (std::size_t i) -> T& {
+    auto operator[] (const std::size_t i) -> T& {
         if(i<0 || i>=size()) {
             throw std::out_of_range("MKVector index is invalid");
         }
         return array[i];
     }
+
+    auto operator() (const std::size_t i) const -> const T { return (*this)[i]; }
+    auto operator() (const std::size_t i) -> T& { return (*this)[i]; }
 
     /*! MKVector assignment operator */
     auto operator= (const MKVector& v) -> MKVector& {
