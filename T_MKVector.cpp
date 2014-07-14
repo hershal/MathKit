@@ -20,9 +20,6 @@ typedef std::shared_ptr< std::map<std::string, std::size_t> > attribute_t_ptr;
 
 attribute_t_ptr accumulate_results(attribute_t_ptr augend,
                                    attribute_t_ptr addend);
-attribute_t_ptr assemble_test_results(std::size_t hits,
-                                      std::size_t misses,
-                                      std::size_t total);
 std::string string_results(std::string sep1, std::string sep2,
                            attribute_t_ptr attrib);
 attribute_t_ptr arithmetic_test(std::size_t vector_len);
