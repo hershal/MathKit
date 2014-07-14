@@ -92,12 +92,58 @@ public:
 
     /*! MKVector subtraction operator */
     auto operator- (const MKVector& v) -> MKVector {
-        if(size() != v.size)
+        if(size() != v.size())
             throw std::out_of_range("MKVector index is invalid");
         MKVector difference(size());
         for(int i=0; i<size(); i++) difference.array[i] = array[i] - v.array[i];
         return difference;
     }
+
+    /*! MKVector fused subtraction-assignment operator */
+    auto operator-= (const MKVector& v) -> MKVector& { /* Fused subtract-equality */
+        if(size() != v.size()) {
+            throw std::out_of_range("MKVector index is invalid");
+        }
+        for(int i=0; i<size(); i++) array[i] = array[i] - v(i);
+        return *this;
+    }
+
+    /*! MKVector multiply operator */
+    auto operator* (const MKVector& v) -> MKVector {
+        if(size() != v.size())
+            throw std::out_of_range("MKVector index is invalid");
+        MKVector difference(size());
+        for(int i=0; i<size(); i++) difference.array[i] = array[i] * v.array[i];
+        return difference;
+    }
+
+    /*! MKVector fused multiply-assignment operator */
+    auto operator*= (const MKVector& v) -> MKVector& { /* Fused subtract-equality */
+        if(size() != v.size()) {
+            throw std::out_of_range("MKVector index is invalid");
+        }
+        for(int i=0; i<size(); i++) array[i] = array[i] * v(i);
+        return *this;
+    }
+
+    /*! MKVector division operator */
+    auto operator/ (const MKVector& v) -> MKVector {
+        if(size() != v.size())
+            throw std::out_of_range("MKVector index is invalid");
+        MKVector difference(size());
+        for(int i=0; i<size(); i++) difference.array[i] = array[i] / v.array[i];
+        return difference;
+    }
+
+    /*! MKVector fused divide-assignment operator */
+    auto operator/= (const MKVector& v) -> MKVector& { /* Fused subtract-equality */
+        if(size() != v.size()) {
+            throw std::out_of_range("MKVector index is invalid");
+        }
+        for(int i=0; i<size(); i++) array[i] = array[i] / v(i);
+        return *this;
+    }
+
 private:
     /*! pointer to elements of MKVector */
     std::vector<T> array;
