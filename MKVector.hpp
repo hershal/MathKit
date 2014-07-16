@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 
-template <typename T>
+template <class T>
 class MKVector {
 public:
     /*! MKVector constructor with size */
