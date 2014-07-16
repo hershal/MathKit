@@ -7,8 +7,13 @@ template <typename T>
 class MKVector {
 public:
     /*! MKVector constructor with size */
-    MKVector(std::size_t n){
+    MKVector(std::size_t n) {
         array.resize(n);
+    }
+
+    /*! MKVector constructor with size and inner argument constructor */
+    MKVector(std::size_t n, const T& t) {
+        array.resize(n, t);
     }
 
     /*! MKVector destructor */
