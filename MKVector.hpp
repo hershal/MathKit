@@ -94,9 +94,9 @@ public:
         if(size() != v.size()) {
             throw std::out_of_range("MKVector index is invalid");
         }
-        MKVector sum(size());
-        for(int i=0; i<size(); i++) sum.array[i] = array[i] + v.array[i];
-        return sum;
+        MKVector<T> result(size());
+        for(int i=0; i<size(); i++) result.array[i] = array[i] + v.array[i];
+        return result;
     }
 
     /*! MKVector fused addition-assignment operator */
@@ -112,9 +112,9 @@ public:
     auto operator- (const MKVector<T>& v) -> MKVector<T> {
         if(size() != v.size())
             throw std::out_of_range("MKVector index is invalid");
-        MKVector difference(size());
-        for(int i=0; i<size(); i++) difference.array[i] = array[i] - v.array[i];
-        return difference;
+        MKVector<T> result(size());
+        for(int i=0; i<size(); i++) result.array[i] = array[i] - v.array[i];
+        return result;
     }
 
     /*! MKVector fused subtraction-assignment operator */
@@ -130,9 +130,9 @@ public:
     auto operator* (const MKVector<T>& v) -> MKVector<T> {
         if(size() != v.size())
             throw std::out_of_range("MKVector index is invalid");
-        MKVector difference(size());
-        for(int i=0; i<size(); i++) difference.array[i] = array[i] * v.array[i];
-        return difference;
+        MKVector<T> result(size());
+        for(int i=0; i<size(); i++) result.array[i] = array[i] * v.array[i];
+        return result;
     }
 
     /*! MKVector fused multiply-assignment operator */
@@ -148,9 +148,9 @@ public:
     auto operator/ (const MKVector<T>& v) -> MKVector<T> {
         if(size() != v.size())
             throw std::out_of_range("MKVector index is invalid");
-        MKVector difference(size());
-        for(int i=0; i<size(); i++) difference.array[i] = array[i] / v.array[i];
-        return difference;
+        MKVector<T> result(size());
+        for(int i=0; i<size(); i++) result.array[i] = array[i] / v.array[i];
+        return result;
     }
 
     /*! MKVector fused divide-assignment operator */
