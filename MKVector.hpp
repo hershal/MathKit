@@ -1,6 +1,5 @@
 /*! MathKit Vector Class */
 
-#include <iostream>
 #include <vector>
 
 template <class T>
@@ -31,14 +30,21 @@ public:
         return array;
     }
 
+    friend auto operator<< (std::ostream& os, MKVector<T>& v) -> std::ostream& {
+        os << v.to_string();
+        return os;
+    }
+
     /*! MKVector string printer */
     auto to_string(std::string sep = ", ") -> const std::string {
-        std::string out;
+        std::stringstream out;
+        out << "[";
         for (auto i=0; i<size(); ++i) {
-            if (i != 0) { out += sep; }
-            out += std::to_string(array[i]);
+            if (i != 0) { out << sep; }
+            out << array[i];
         }
-        return out;
+        out << "]";
+        return out.str();
     }
 
     /*! MKVector get dimension (alias to size()) */
