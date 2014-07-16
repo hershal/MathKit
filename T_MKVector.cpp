@@ -116,19 +116,19 @@ auto fused_arithmetic_assignment_test(std::size_t vector_len)
     /* Verify output */
     for (auto i=0; i<vector_len; ++i) {
         BOOST_ASSERT_MSG
-            (v_test_add(i) == v_add(i),
+            ((v_test_add(i) != v_test_add(i)) || v_test_add(i) == v_add(i),
              (std::stringstream() << v_test_add(i) << "!=" << v_add(i))
              .str().c_str());
         BOOST_ASSERT_MSG
-            (v_test_sub(i) == v_sub(i),
+            ((v_test_sub(i) != v_test_sub(i)) || v_test_sub(i) == v_sub(i),
              (std::stringstream() << v_test_sub(i) << "!=" << v_sub(i))
              .str().c_str());
         BOOST_ASSERT_MSG
-            (v_test_mul(i) == v_mul(i),
+            ((v_test_mul(i) != v_test_mul(i)) || v_test_mul(i) == v_mul(i),
              (std::stringstream() << v_test_mul(i) << "!=" << v_mul(i))
              .str().c_str());
         BOOST_ASSERT_MSG
-            (v_test_div(i) == v_div(i),
+            ((v_test_div(i) != v_test_div(i)) || v_test_div(i) == v_div(i),
              (std::stringstream() << v_test_div(i) << "!=" << v_div(i))
              .str().c_str());
     }
@@ -162,19 +162,19 @@ auto arithmetic_test(std::size_t vector_len)
     /* Verify output */
     for (auto i=0; i<vector_len; ++i) {
         BOOST_ASSERT_MSG
-            (v_add(i) == v1(i) + v2(i),
+            ((v_add(i) != v_add(i)) || v_add(i) == v1(i) + v2(i),
              (std::stringstream() << v_add(i) << "!=" << v1(i) << " + " << v2(i))
              .str().c_str());
         BOOST_ASSERT_MSG
-            (v_sub(i) == v1(i) - v2(i),
+            ((v_sub(i) != v_sub(i)) || v_sub(i) == v1(i) - v2(i),
              (std::stringstream() << v_sub(i) << "!=" << v1(i) << " - " << v2(i))
              .str().c_str());
         BOOST_ASSERT_MSG
-            (v_mul(i) == v1(i) * v2(i),
+            ((v_mul(i) != v_mul(i)) || v_mul(i) == v1(i) * v2(i),
              (std::stringstream() << v_mul(i) << "!=" << v1(i) << " * " << v2(i))
              .str().c_str());
         BOOST_ASSERT_MSG
-            (v_div(i) == v1(i) / v2(i),
+            ((v_div(i) != v_div(i)) || v_div(i) == v1(i) / v2(i),
              (std::stringstream() << v_div(i) << "!=" << v1(i) << " / " << v2(i))
              .str().c_str());
     }
