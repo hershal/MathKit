@@ -21,7 +21,7 @@ public:
     }
 
     /*! MKVector copy constructor */
-    MKVector(const MKVector& v) {
+    MKVector(const MKVector<T>& v) {
         array = v.to_vector();
     }
 
