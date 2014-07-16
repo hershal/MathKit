@@ -76,13 +76,13 @@ public:
     auto operator() (const std::size_t i) -> T& { return (*this)[i]; }
 
     /*! MKVector assignment operator */
-    auto operator= (const MKVector& v) -> MKVector& {
+    auto operator= (const MKVector<T>& v) -> MKVector<T>& {
         array = v.to_vector();
         return *this;
     }
 
     /*! MKVector fill-vector-with-scalar operator */
-    auto operator= (T x) -> MKVector& {
+    auto operator= (T x) -> MKVector<T>& {
         for(int i=0; i<size(); i++) {
             array[i] = x;
         }
@@ -90,7 +90,7 @@ public:
     }
 
     /*! MKVector addition operator */
-    auto operator+ (const MKVector& v) -> MKVector {
+    auto operator+ (const MKVector<T>& v) -> MKVector<T> {
         if(size() != v.size()) {
             throw std::out_of_range("MKVector index is invalid");
         }
@@ -100,7 +100,7 @@ public:
     }
 
     /*! MKVector fused addition-assignment operator */
-    auto operator+= (const MKVector& v) -> MKVector& {
+    auto operator+= (const MKVector<T>& v) -> MKVector<T>& { /* Fused add-assign */
         if(size() != v.size()) {
             throw std::out_of_range("MKVector index is invalid");
         }
@@ -109,7 +109,7 @@ public:
     }
 
     /*! MKVector subtraction operator */
-    auto operator- (const MKVector& v) -> MKVector {
+    auto operator- (const MKVector<T>& v) -> MKVector<T> {
         if(size() != v.size())
             throw std::out_of_range("MKVector index is invalid");
         MKVector difference(size());
@@ -118,7 +118,7 @@ public:
     }
 
     /*! MKVector fused subtraction-assignment operator */
-    auto operator-= (const MKVector& v) -> MKVector& { /* Fused subtract-equality */
+    auto operator-= (const MKVector<T>& v) -> MKVector<T>& { /* Fused subtract-assign */
         if(size() != v.size()) {
             throw std::out_of_range("MKVector index is invalid");
         }
@@ -127,7 +127,7 @@ public:
     }
 
     /*! MKVector multiply operator */
-    auto operator* (const MKVector& v) -> MKVector {
+    auto operator* (const MKVector<T>& v) -> MKVector<T> {
         if(size() != v.size())
             throw std::out_of_range("MKVector index is invalid");
         MKVector difference(size());
@@ -136,7 +136,7 @@ public:
     }
 
     /*! MKVector fused multiply-assignment operator */
-    auto operator*= (const MKVector& v) -> MKVector& { /* Fused subtract-equality */
+    auto operator*= (const MKVector<T>& v) -> MKVector<T>& { /* Fused multiply-assign */
         if(size() != v.size()) {
             throw std::out_of_range("MKVector index is invalid");
         }
@@ -145,7 +145,7 @@ public:
     }
 
     /*! MKVector division operator */
-    auto operator/ (const MKVector& v) -> MKVector {
+    auto operator/ (const MKVector<T>& v) -> MKVector<T> {
         if(size() != v.size())
             throw std::out_of_range("MKVector index is invalid");
         MKVector difference(size());
@@ -154,7 +154,7 @@ public:
     }
 
     /*! MKVector fused divide-assignment operator */
-    auto operator/= (const MKVector& v) -> MKVector& { /* Fused subtract-equality */
+    auto operator/= (const MKVector<T>& v) -> MKVector<T>& { /* Fused divide-assign */
         if(size() != v.size()) {
             throw std::out_of_range("MKVector index is invalid");
         }
