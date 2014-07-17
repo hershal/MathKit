@@ -24,8 +24,6 @@ int main() {
 
     std::size_t len = 100;
     std::size_t vector_len = (float)(pow(10000.0, 0.5));
-    /* std::size_t len = 10; */
-    /* std::size_t vector_len = 10000; */
 
     std::size_t insertion_num_insertions = (float)(pow(100000.0, 0.5));
     float insertion_percentage_out_of_bounds = 0.25;
