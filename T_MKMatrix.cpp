@@ -20,6 +20,9 @@ auto random_insertion_test(std::size_t vector_len,
                            float percentage_out_of_bounds)
     -> std::shared_ptr<TKNumberedAttribute<std::size_t> >;
 
+auto arithmetic_test(std::size_t vector_len)
+    -> std::shared_ptr<TKNumberedAttribute<std::size_t> >;
+
 int main() {
 
     std::size_t len = 100;
@@ -37,6 +40,15 @@ int main() {
     }
     std::cout << "insertion test\n" <<
         insertion_test_results.to_string() << "\n" << std::endl;
+
+
+    /* Arithmetic Test */
+    auto arithmetic_test_results = TKNumberedAttribute<std::size_t>();
+    for (auto i=0; i<len; ++i) {
+        arithmetic_test_results += *(arithmetic_test(vector_len));
+    }
+    std::cout << "arithmetic test\n" <<
+        arithmetic_test_results.to_string() << "\n" << std::endl;
 }
 
 auto random_insertion_test(std::size_t vector_len, std::size_t num_insertions,
@@ -87,6 +99,58 @@ auto random_insertion_test(std::size_t vector_len, std::size_t num_insertions,
     auto m = std::make_shared<TKNumberedAttribute<std::size_t> >();
     (*m)[k_num_misses] = num_misses;
     (*m)[k_num_hits] = num_hits;
+    (*m)[k_num_total] = num_total;
+    return m;
+}
+
+auto arithmetic_test(std::size_t vector_len)
+    -> std::shared_ptr<TKNumberedAttribute<std::size_t> > {
+
+    std::srand(std::time(0));
+    std::size_t num_total = 0;
+
+    MKVector < MKVector<float> > v1(vector_len, MKVector<float>(vector_len));
+    MKVector < MKVector<float> > v2(vector_len, MKVector<float>(vector_len));
+
+    /* Populate the vectors here */
+    for (auto i=0; i<vector_len; ++i) {
+        for (auto j=0; j<vector_len; ++j) {
+            v1(i)(j) = (float)(rand()%vector_len);
+            v2(i)(j) = (float)(rand()%vector_len);
+            ++num_total;
+        }
+    }
+
+    /* Perform the arithmetic */
+    MKVector < MKVector<float> > v_add = v1 + v2;
+    MKVector < MKVector<float> > v_sub = v1 - v2;
+    MKVector < MKVector<float> > v_mul = v1 * v2;
+    MKVector < MKVector<float> > v_div = v1 / v2;
+
+    /* Verify output */
+    for (auto i=0; i<vector_len; ++i) {
+        for (auto j=0; j<vector_len; ++j) {
+            BOOST_ASSERT_MSG
+                ((v_add(i)(j) != v_add(i)(j)) || v_add(i)(j) == v1(i)(j) + v2(i)(j),
+                 (std::stringstream() << v_add(i)(j) << "!=" << v1(i)(j) << " + " << v2(i)(j))
+                 .str().c_str());
+            BOOST_ASSERT_MSG
+                ((v_sub(i)(j) != v_sub(i)(j)) || v_sub(i)(j) == v1(i)(j) - v2(i)(j),
+                 (std::stringstream() << v_sub(i)(j) << "!=" << v1(i)(j) << " - " << v2(i)(j))
+                 .str().c_str());
+            BOOST_ASSERT_MSG
+                ((v_mul(i)(j) != v_mul(i)(j)) || v_mul(i)(j) == v1(i)(j) * v2(i)(j),
+                 (std::stringstream() << v_mul(i)(j) << "!=" << v1(i)(j) << " * " << v2(i)(j))
+                 .str().c_str());
+            BOOST_ASSERT_MSG
+                ((v_div(i)(j) != v_div(i)(j)) || v_div(i)(j) == v1(i)(j) / v2(i)(j),
+                 (std::stringstream() << v_div(i)(j) << "!=" << v1(i)(j) << " / " << v2(i)(j))
+                 .str().c_str());
+        }
+    }
+
+    /* Generate result receipt */
+    auto m = std::make_shared<TKNumberedAttribute<std::size_t> >();
     (*m)[k_num_total] = num_total;
     return m;
 }
