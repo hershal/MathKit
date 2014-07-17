@@ -1,5 +1,5 @@
-// MathKit Argument Testing
-// This is without using MKBaseAlgorithm
+/* MathKit Argument Testing */
+/* This is without using MKBaseAlgorithm */
 
 #include <iostream>
 #include "MKArgument.hpp"
