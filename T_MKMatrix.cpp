@@ -99,7 +99,7 @@ auto random_insertion_test(std::size_t vector_len, std::size_t num_insertions,
                 num_hits++;
             } catch (std::out_of_range e) {
                 BOOST_ASSERT_MSG(i_loc >= vector_len || j_loc >= vector_len,
-                                 (std::stringstream() << i_loc << ">=" << vector_len << " && " << i_loc << ">=" << vector_len)
+                                 (std::stringstream() << i_loc << ">=" << vector_len << " && " << j_loc << ">=" << vector_len)
                                  .str().c_str());
                 num_misses++;
             }
