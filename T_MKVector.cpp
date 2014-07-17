@@ -1,4 +1,4 @@
-// MathKit Vector Testing
+/* MathKit Vector Testing */
 
 #include <vector>
 #include <sstream>
