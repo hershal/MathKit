@@ -95,7 +95,7 @@ public:
             throw std::out_of_range("MKVector index is invalid");
         }
         MKVector<T> result(v);
-        for(int i=0; i<size(); i++) result.array[i] += array[i];
+        for(int i=0; i<size(); i++) result.array[i] = array[i] + result.array[i];
         return result;
     }
 
@@ -113,7 +113,7 @@ public:
         if(size() != v.size())
             throw std::out_of_range("MKVector index is invalid");
         MKVector<T> result(v);
-        for(int i=0; i<size(); i++) result.array[i] -= array[i];
+        for(int i=0; i<size(); i++) result.array[i] = array[i] - result.array[i];
         return result;
     }
 
@@ -131,7 +131,7 @@ public:
         if(size() != v.size())
             throw std::out_of_range("MKVector index is invalid");
         MKVector<T> result(v);
-        for(int i=0; i<size(); i++) result.array[i] *= array[i];
+        for(int i=0; i<size(); i++) result.array[i] = array[i] * result.array[i];
         return result;
     }
 
@@ -149,7 +149,7 @@ public:
         if(size() != v.size())
             throw std::out_of_range("MKVector index is invalid");
         MKVector<T> result(v);
-        for(int i=0; i<size(); i++) result.array[i] /= array[i];
+        for(int i=0; i<size(); i++) result.array[i] = array[i] / result.array[i];
         return result;
     }
 
