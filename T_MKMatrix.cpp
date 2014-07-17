@@ -23,6 +23,9 @@ auto random_insertion_test(std::size_t vector_len,
 auto arithmetic_test(std::size_t vector_len)
     -> std::shared_ptr<TKNumberedAttribute<std::size_t> >;
 
+auto fused_arithmetic_assignment_test(std::size_t vector_len)
+    -> std::shared_ptr<TKNumberedAttribute<std::size_t> >;
+
 int main() {
 
     std::size_t len = 100;
@@ -49,6 +52,16 @@ int main() {
     }
     std::cout << "arithmetic test\n" <<
         arithmetic_test_results.to_string() << "\n" << std::endl;
+
+    /* Fused Arithmetic-Assignment Test */
+    auto fused_arithmetic_assignment_test_results = TKNumberedAttribute<std::size_t>();
+    for (auto i=0; i<len; ++i) {
+        fused_arithmetic_assignment_test_results +=
+            *(fused_arithmetic_assignment_test(vector_len));
+    }
+    std::cout << "fused arithmetic-assignment test\n" <<
+        fused_arithmetic_assignment_test_results.to_string()
+              << "\n" << std::endl;
 }
 
 auto random_insertion_test(std::size_t vector_len, std::size_t num_insertions,
@@ -76,7 +89,7 @@ auto random_insertion_test(std::size_t vector_len, std::size_t num_insertions,
 
             /* Randomize insertion data */
             float value = (float)(rand());
-    
+
             /* Verify insertion mechanisms */
             try {
                 mat[i_loc][j_loc] = value;
@@ -149,6 +162,76 @@ auto arithmetic_test(std::size_t vector_len)
         }
     }
 
+    /* Generate result receipt */
+    auto m = std::make_shared<TKNumberedAttribute<std::size_t> >();
+    (*m)[k_num_total] = num_total;
+    return m;
+}
+
+auto fused_arithmetic_assignment_test(std::size_t vector_len)
+    -> std::shared_ptr<TKNumberedAttribute<std::size_t> > {
+
+    std::srand(std::time(0));
+    std::size_t num_total = 0;
+
+    MKVector < MKVector<float> > v_const(vector_len, MKVector<float>(vector_len));
+
+    MKVector < MKVector<float> > v_add(vector_len, MKVector<float>(vector_len));
+    MKVector < MKVector<float> > v_sub(vector_len, MKVector<float>(vector_len));
+    MKVector < MKVector<float> > v_mul(vector_len, MKVector<float>(vector_len));
+    MKVector < MKVector<float> > v_div(vector_len, MKVector<float>(vector_len));
+
+    MKVector < MKVector<float> > v_test_add(vector_len, MKVector<float>(vector_len));
+    MKVector < MKVector<float> > v_test_sub(vector_len, MKVector<float>(vector_len));
+    MKVector < MKVector<float> > v_test_mul(vector_len, MKVector<float>(vector_len));
+    MKVector < MKVector<float> > v_test_div(vector_len, MKVector<float>(vector_len));
+
+    /* Populate the test vectors' data and the verification vectors' data */
+    for (auto i=0; i<vector_len; ++i) {
+        for (auto j=0; j<vector_len; ++j) {
+            v_const(i)(j) = (float)(rand());
+
+            v_add(i)(j) = (float)(rand());
+            v_sub(i)(j) = (float)(rand());
+            v_mul(i)(j) = (float)(rand());
+            v_div(i)(j) = (float)(rand());
+
+            v_test_add(i)(j) = v_add(i)(j) + v_const(i)(j);
+            v_test_sub(i)(j) = v_sub(i)(j) - v_const(i)(j);
+            v_test_mul(i)(j) = v_mul(i)(j) * v_const(i)(j);
+            v_test_div(i)(j) = v_div(i)(j) / v_const(i)(j);
+
+            ++num_total;
+        }
+    }
+
+    /* Perform the addition */
+    v_add += v_const;
+    v_sub -= v_const;
+    v_mul *= v_const;
+    v_div /= v_const;
+
+    /* Verify output */
+    for (auto i=0; i<vector_len; ++i) {
+        for (auto j=0; j<vector_len; ++j) {
+            BOOST_ASSERT_MSG
+                (v_test_add(i)(j) == v_add(i)(j),
+                 (std::stringstream() << v_test_add(i)(j) << "!=" << v_add(i)(j))
+                 .str().c_str());
+            BOOST_ASSERT_MSG
+                (v_test_sub(i)(j) == v_sub(i)(j),
+                 (std::stringstream() << v_test_sub(i)(j) << "!=" << v_sub(i)(j))
+                 .str().c_str());
+            BOOST_ASSERT_MSG
+                (v_test_mul(i)(j) == v_mul(i)(j),
+                 (std::stringstream() << v_test_mul(i)(j) << "!=" << v_mul(i)(j))
+                 .str().c_str());
+            BOOST_ASSERT_MSG
+                (v_test_div(i)(j) == v_div(i)(j),
+                 (std::stringstream() << v_test_div(i)(j) << "!=" << v_div(i)(j))
+                 .str().c_str());
+        }
+    }
     /* Generate result receipt */
     auto m = std::make_shared<TKNumberedAttribute<std::size_t> >();
     (*m)[k_num_total] = num_total;
