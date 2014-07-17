@@ -1,6 +1,5 @@
 // MathKit Vector Testing
 
-#include <iostream>
 #include <vector>
 #include <sstream>
 #include <random>
