@@ -94,8 +94,8 @@ public:
         if(size() != v.size()) {
             throw std::out_of_range("MKVector index is invalid");
         }
-        MKVector<T> result(v);
-        for(int i=0; i<size(); i++) result.array[i] = array[i] + result.array[i];
+        MKVector<T> result(*this);
+        for(int i=0; i<size(); i++) result.array[i] += v.array[i];
         return result;
     }
 
@@ -112,8 +112,8 @@ public:
     auto operator- (const MKVector<T>& v) -> MKVector<T> {
         if(size() != v.size())
             throw std::out_of_range("MKVector index is invalid");
-        MKVector<T> result(v);
-        for(int i=0; i<size(); i++) result.array[i] = array[i] - result.array[i];
+        MKVector<T> result(*this);
+        for(int i=0; i<size(); i++) result.array[i] -= v.array[i];
         return result;
     }
 
@@ -130,8 +130,8 @@ public:
     auto operator* (const MKVector<T>& v) -> MKVector<T> {
         if(size() != v.size())
             throw std::out_of_range("MKVector index is invalid");
-        MKVector<T> result(v);
-        for(int i=0; i<size(); i++) result.array[i] = array[i] * result.array[i];
+        MKVector<T> result(*this);
+        for(int i=0; i<size(); i++) result.array[i] *= v.array[i];
         return result;
     }
 
@@ -148,8 +148,8 @@ public:
     auto operator/ (const MKVector<T>& v) -> MKVector<T> {
         if(size() != v.size())
             throw std::out_of_range("MKVector index is invalid");
-        MKVector<T> result(v);
-        for(int i=0; i<size(); i++) result.array[i] = array[i] / result.array[i];
+        MKVector<T> result(*this);
+        for(int i=0; i<size(); i++) result.array[i] /= v.array[i];
         return result;
     }
 
