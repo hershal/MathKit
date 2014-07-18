@@ -11,24 +11,7 @@
 #include "MKVector.hpp"
 #include "TKNumberedAttribute.hpp"
 
-const std::string k_num_misses = "k_num_misses";
-const std::string k_num_hits = "k_num_hits";
-const std::string k_num_total = "k_num_total";
-
-auto arithmetic_test(std::size_t vector_len)
-    -> std::shared_ptr<TKNumberedAttribute<std::size_t> >;
-
-auto fused_arithmetic_assignment_test(std::size_t vector_len)
-    -> std::shared_ptr<TKNumberedAttribute<std::size_t> >;
-
-auto random_insertion_test(std::size_t vector_len,
-                           std::size_t num_insertions,
-                           float percentage_out_of_bounds)
-    -> std::shared_ptr<TKNumberedAttribute<std::size_t> >;
-
-auto fill_test(std::size_t vector_len)
-    -> std::shared_ptr<TKNumberedAttribute<std::size_t> >;
-
+#include "T_MKVector.hpp"
 
 int main() {
     std::size_t len = 100;
