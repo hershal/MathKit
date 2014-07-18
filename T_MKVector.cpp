@@ -20,6 +20,14 @@ int main() {
     std::size_t insertion_num_insertions = 100000;
     float insertion_percentage_out_of_bounds = 0.25;
 
+    /* Fill Test */
+    auto fill_test_results = TKNumberedAttribute<std::size_t>();
+    for (auto i=0; i<len; ++i) {
+        fill_test_results += *(fill_test(vector_len));
+    }
+    std::cout << "fill test\n" <<
+        fill_test_results.to_string() << "\n" << std::endl;
+
     /* Insertion Test */
     auto insertion_test_results = TKNumberedAttribute<std::size_t>();
     for (auto i=0; i<len; ++i) {
@@ -29,14 +37,6 @@ int main() {
     }
     std::cout << "insertion test\n" <<
         insertion_test_results.to_string() << "\n" << std::endl;
-
-    /* Fill Test */
-    auto fill_test_results = TKNumberedAttribute<std::size_t>();
-    for (auto i=0; i<len; ++i) {
-        fill_test_results += *(fill_test(vector_len));
-    }
-    std::cout << "fill test\n" <<
-        fill_test_results.to_string() << "\n" << std::endl;
 
     /* Arithmetic Test */
     auto arithmetic_test_results = TKNumberedAttribute<std::size_t>();
@@ -215,6 +215,7 @@ auto fill_test(std::size_t vector_len)
     -> std::shared_ptr<TKNumberedAttribute<std::size_t> > {
 
     std::srand(std::time(0));
+    std::size_t num_total = 0;
 
     /* Create the vectors */
     MKVector <float> v1(vector_len);
@@ -225,6 +226,7 @@ auto fill_test(std::size_t vector_len)
     v1 = fill_value;
     for (auto i=0; i<vector_len; ++i) {
         v2[i] = fill_value;
+        ++num_total;
     }
 
     /* Verify output */
@@ -236,6 +238,6 @@ auto fill_test(std::size_t vector_len)
 
     /* Generate result receipt */
     auto m = std::make_shared<TKNumberedAttribute<std::size_t> >();
-    (*m)[k_num_total] = vector_len;
+    (*m)[k_num_total] = num_total;
     return m;
 }
