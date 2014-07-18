@@ -1,4 +1,4 @@
-/* MathKit Nested Vector Testing */
+/* MathKit Nested MKVector Testing */
 
 #include <vector>
 #include <sstream>
