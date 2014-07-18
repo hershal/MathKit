@@ -14,6 +14,9 @@
 
 #include "T_MKVector.hpp"
 
+auto fused_multiply_add_test(std::size_t vector_len)
+    -> std::shared_ptr<TKNumberedAttribute<std::size_t> >;
+
 int main() {
 
     std::size_t len = 100;
@@ -59,6 +62,17 @@ int main() {
     std::cout << "fused arithmetic-assignment test\n"
               << fused_arithmetic_assignment_test_results.to_string()
               << "\n" << std::endl;
+
+    /* Fused Multiply-Add Test */
+    auto fused_multiply_add_test_results = TKNumberedAttribute<std::size_t>();
+    for (auto i=0; i<len; ++i) {
+        fused_multiply_add_test_results +=
+            *(fused_multiply_add_test(vector_len));
+    }
+    std::cout << "fused multiply-add test\n"
+              << fused_multiply_add_test_results.to_string()
+              << "\n" << std::endl;
+
 }
 
 auto random_insertion_test(std::size_t vector_len, std::size_t num_insertions,
@@ -262,6 +276,49 @@ auto fill_test(std::size_t vector_len)
             BOOST_ASSERT_MSG(((v1[i][j] == v2[i][j]) && (v1[i][j] == fill_value[i])),
                              (std::stringstream() << fill_value[i] << "!="<< v1[i][j] << "!=" << v2[i][j])
                              .str().c_str());
+        }
+    }
+
+    /* Generate result receipt */
+    auto m = std::make_shared<TKNumberedAttribute<std::size_t> >();
+    (*m)[k_num_total] = num_total;
+    return m;
+}
+
+auto fused_multiply_add_test(std::size_t vector_len)
+    -> std::shared_ptr<TKNumberedAttribute<std::size_t> > {
+
+    std::srand(std::time(0));
+    std::size_t num_total = 0;
+
+    MKVector < MKVector<float> > v_x(vector_len, MKVector<float>(vector_len));
+    MKVector < MKVector<float> > v_y(vector_len, MKVector<float>(vector_len));
+    MKVector < MKVector<float> > v_z(vector_len, MKVector<float>(vector_len));
+
+    MKVector < MKVector<float> > v_test_fma(vector_len, MKVector<float>(vector_len));
+    MKVector < MKVector<float> > v_fma(vector_len, MKVector<float>(vector_len));
+
+    /* Populate the test vectors' data and the verification vectors' data */
+    for (auto i=0; i<vector_len; ++i) {
+        for (auto j=0; j<vector_len; ++j) {
+            v_x(i)(j) = (float)(rand());
+            v_y(i)(j) = (float)(rand());
+            v_z(i)(j) = (float)(rand());
+
+            v_test_fma(i)(j) = fma(v_x(i)(j), v_y(i)(j), v_z(i)(j));
+
+            ++num_total;
+        }
+        v_fma(i) = *(fma(v_x(i), v_y(i), v_z(i)));
+    }
+
+    /* Verify output */
+    for (auto i=0; i<vector_len; ++i) {
+        for (auto j=0; j<vector_len; ++j) {
+            BOOST_ASSERT_MSG
+                (v_test_fma(i)(j) == v_fma(i)(j),
+                 (std::stringstream() << v_test_fma(i)(j) << "!=" << v_fma(i)(j))
+                 .str().c_str());
         }
     }
 

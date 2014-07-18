@@ -170,3 +170,12 @@ private:
     std::vector<T> array;
     std::size_t ar_size;
 };
+
+template <class T>
+auto fma(const MKVector<T>& x, const MKVector<T>& y, const MKVector<T>& z)
+    -> std::shared_ptr< MKVector<T> > {
+    // MKVector<T> result(x);
+    auto result = std::make_shared< MKVector<T> >(x);
+    for(int i=0; i<x.size(); i++) (*result)[i] = fma(x[i], y[i], z[i]);
+    return result;
+}
