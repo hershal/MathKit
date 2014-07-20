@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <sstream>
+#include <iostream>
 #include <random>
 #include <ctime>
 #include <map>
