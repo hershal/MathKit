@@ -6,7 +6,7 @@
 #include <memory>
 #include "MKMatrix.hpp"
 
-typedef MKVector_p std::shared_ptr<MKVector <float> >;
+typedef std::shared_ptr<MKVector <float> > MKVector_p;
 
 auto MKGaussPivotIndex(MKMatrix_p A, int k, int n) -> int;
 auto MKGaussRowExchange(MKMatrix_p A, MKVector_p b, int k, int p, int n) -> void;
