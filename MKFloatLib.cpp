@@ -18,11 +18,12 @@ auto MFAlmostEqualRelative(float a, float b, float epsilon) -> bool {
         return true;
     }
 
+    /* We want to divide by the largest number to minimize roundoff error */
     float relative_error;
     if (fabs(a) > fabs(b)) {
-        relative_error = MFRelativeError(a, b);
-    } else {
         relative_error = MFRelativeError(b, a);
+    } else {
+        relative_error = MFRelativeError(a, b);
     }
 
     if (relative_error <= epsilon) {
