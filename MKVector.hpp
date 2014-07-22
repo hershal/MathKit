@@ -4,6 +4,8 @@
 #define MK_VECTOR
 
 #include <vector>
+#include <string>
+#include <sstream>
 
 template <class T>
 class MKVector {
