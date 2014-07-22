@@ -19,8 +19,15 @@ auto MKGaussPivotIndex(MKMatrix_p A, int k) -> int {
     return i;
 }
 
-auto MKGaussRowExchange(MKMatrix_p A, MKVector_p b, int k, int p, int n) -> void {
+auto MKGaussRowExchange(MKMatrix_p A, MKVector_p b, int k, int p) -> void {
+    MKVector<float> tmp_A_val = (*A)[k];
+    float tmp_b_val = (*b)[k];
+    
+    (*b)[k] = (*b)[p];
+    (*b)[p] = tmp_b_val;
 
+    (*A)[k] = (*A)[p];
+    (*A)[p] = tmp_A_val;
 }
 
 auto MKGaussFwdElimination(MKMatrix_p A, MKVector_p b, int k, int n) -> void {

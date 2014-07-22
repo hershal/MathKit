@@ -17,6 +17,11 @@ int main() {
     std::size_t vector_len = 3;
     MKMatrix_p mat = std::make_shared<MKVector<MKVector<float> > >
         (vector_len, MKVector<float>(vector_len));
+    MKVector_p vec = std::make_shared<MKVector <float> >(vector_len);
+
+    (*vec)[0] = 0;
+    (*vec)[1] = 1;
+    (*vec)[2] = 2;
 
     (*mat)[0][0] = 11;
     (*mat)[0][1] = 12;
@@ -31,10 +36,16 @@ int main() {
     (*mat)[2][2] = 33;
 
     std::cout << (*mat).to_string("\n") << std::endl;
+    std::cout << (*vec).to_string(", ") << std::endl;
 
     std::cout << MKGaussPivotIndex(mat, 0) << std::endl;
     std::cout << MKGaussPivotIndex(mat, 1) << std::endl;
     std::cout << MKGaussPivotIndex(mat, 2) << std::endl;
+
+    MKGaussRowExchange(mat, vec, 1, 2);
+
+    std::cout << (*mat).to_string("\n") << std::endl;
+    std::cout << (*vec).to_string(", ") << std::endl;
 
     std::cout << "test completed" << std::endl;
     return 0;
