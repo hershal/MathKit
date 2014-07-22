@@ -22,8 +22,8 @@ int main() {
     (*mat)[0][1] = 12;
     (*mat)[0][2] = 13;
 
-    (*mat)[1][0] = 21;
-    (*mat)[1][1] = 22;
+    (*mat)[1][0] = 0.0;
+    (*mat)[1][1] = 0.0;
     (*mat)[1][2] = 23;
 
     (*mat)[2][0] = 31;
@@ -31,6 +31,10 @@ int main() {
     (*mat)[2][2] = 33;
 
     std::cout << (*mat).to_string("\n") << std::endl;
+
+    std::cout << MKGaussPivotIndex(mat, 0, (int)((*mat).size())) << std::endl;
+    std::cout << MKGaussPivotIndex(mat, 1, (int)((*mat).size())) << std::endl;
+    std::cout << MKGaussPivotIndex(mat, 2, (int)((*mat).size())) << std::endl;
 
     std::cout << "test completed" << std::endl;
     return 0;
