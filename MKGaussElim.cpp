@@ -1,5 +1,7 @@
 /* MathKit Gaussian Elimination Implemenation */
 
+#include <cmath>
+
 #include "MKGaussElim.hpp"
 #include "MKFloatLib.hpp"
 
@@ -27,6 +29,6 @@ auto MKGaussBwdSubstitution(MKMatrix_p A, MKVector_p b, MKVector_p x, int n) -> 
 }
 
 auto MKGaussElim(MKMatrix_p A, MKVector_p b, MKVector_p x) -> int {
-
+    return 0;
 }
 
