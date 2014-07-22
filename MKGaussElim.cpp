@@ -9,8 +9,9 @@ const float epsilon = pow(10, -6);
 
 /*! \brief Searches for an appropriate pivot for Gaussian Elimination
 */
-auto MKGaussPivotIndex(MKMatrix_p A, int k, int n) -> int {
+auto MKGaussPivotIndex(MKMatrix_p A, int k) -> int {
     std::size_t i = k;
+    std::size_t n = (*A).size();
     while ((i<n) && MFAlmostEqualRelative((*A)[i][k], 0.0, epsilon)) {
         ++i;
     }

@@ -32,9 +32,9 @@ int main() {
 
     std::cout << (*mat).to_string("\n") << std::endl;
 
-    std::cout << MKGaussPivotIndex(mat, 0, (int)((*mat).size())) << std::endl;
-    std::cout << MKGaussPivotIndex(mat, 1, (int)((*mat).size())) << std::endl;
-    std::cout << MKGaussPivotIndex(mat, 2, (int)((*mat).size())) << std::endl;
+    std::cout << MKGaussPivotIndex(mat, 0) << std::endl;
+    std::cout << MKGaussPivotIndex(mat, 1) << std::endl;
+    std::cout << MKGaussPivotIndex(mat, 2) << std::endl;
 
     std::cout << "test completed" << std::endl;
     return 0;

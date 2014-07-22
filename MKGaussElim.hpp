@@ -8,7 +8,7 @@
 
 typedef std::shared_ptr<MKVector <float> > MKVector_p;
 
-auto MKGaussPivotIndex(MKMatrix_p A, int k, int n) -> int;
+auto MKGaussPivotIndex(MKMatrix_p A, int k) -> int;
 auto MKGaussRowExchange(MKMatrix_p A, MKVector_p b, int k, int p, int n) -> void;
 auto MKGaussFwdElimination(MKMatrix_p A, MKVector_p b, int k, int n) -> void;
 auto MKGaussBwdSubstitution(MKMatrix_p A, MKVector_p b, MKVector_p x, int n) -> void;
