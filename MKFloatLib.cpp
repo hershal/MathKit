@@ -18,7 +18,13 @@ auto MFAlmostEqualRelative(float a, float b, float epsilon) -> bool {
         return true;
     }
 
-    float relative_error = MFRelativeError(a, b);
+    float relative_error;
+    if (fabs(a) > fabs(b)) {
+        relative_error = MFRelativeError(a, b);
+    } else {
+        relative_error = MFRelativeError(b, a);
+    }
+
     if (relative_error <= epsilon) {
         return true;
     }
