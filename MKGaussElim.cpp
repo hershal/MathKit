@@ -35,7 +35,17 @@ auto MKGaussRowExchange(MKMatrix_p A, MKVector_p b, std::size_t k, std::size_t p
   /param k the row index at which to start the forward elimination
  */
 auto MKGaussFwdElimination(MKMatrix_p A, MKVector_p b, std::size_t k) -> void {
+    float scaling_coef;
+    std::size_t n = A->size();
 
+    for (auto i=k+1; i<n; ++i) {
+        scaling_coef = ((*A)[i][k])/((*A)[k][k]);
+        (*b)[i] = (*b)[i] - ((*b)[k] * scaling_coef);
+
+        for (auto j=k+1; j<n; ++j) {
+            (*A)[i][j] -= scaling_coef*(*A)[k][j];
+        }
+    }
 }
 
 auto MKGaussBwdSubstitution(MKMatrix_p A, MKVector_p b, MKVector_p x, std::size_t n) -> void {

@@ -61,6 +61,19 @@ int main() {
     std::cout << "exchanged vec_copy" << std::endl;
     std::cout << (*vec_copy).to_string(", ") << std::endl;
 
+    std::cout << std::endl;
+
+    auto fwd_elim_start_idx = 0;
+    mat_copy = mat;
+    vec_copy = vec;
+    std::cout << "fwd eliminating from row "
+              << fwd_elim_start_idx << ":" << std::endl;
+    MKGaussFwdElimination(mat_copy, vec_copy, fwd_elim_start_idx);
+    std::cout << "exchanged mat_copy" << std::endl;
+    std::cout << (*mat_copy).to_string("\n") << std::endl;
+    std::cout << "exchanged vec_copy" << std::endl;
+    std::cout << (*vec_copy).to_string(", ") << std::endl;
+
     std::cout << "test completed" << std::endl;
     return 0;
 }
