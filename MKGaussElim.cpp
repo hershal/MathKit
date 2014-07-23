@@ -48,8 +48,24 @@ auto MKGaussFwdElimination(MKMatrix_p A, MKVector_p b, std::size_t k) -> void {
     }
 }
 
-auto MKGaussBwdSubstitution(MKMatrix_p A, MKVector_p b, MKVector_p x, std::size_t n) -> void {
+auto MKGaussBwdSubstitution(MKMatrix_p A, MKVector_p b, MKVector_p x) -> void {
+    std::size_t n = A->size();
+    float tmp;
 
+    (*x)[n-1] = (*b)[n-1] / (*A)[n-1][n-1];
+
+    /* Due to the unsigned nature of k, I can't compare against --0 (-1) */
+    for (auto k=n-2; k<n-1; --k) {
+        /* Possible speedup: cast to char* and use xor from
+           char*[0]..char*[sizeof(float)-1] */
+        tmp = 0.0;
+
+        for (auto j=k+1; j<n; ++j) {
+            tmp += (*A)[k][j] * (*x)[j];
+        }
+
+        (*x)[k] = ((*b)[k] - tmp) / (*A)[k][k];
+    }
 }
 
 auto MKGaussElim(MKMatrix_p A, MKVector_p b, MKVector_p x) -> void {
