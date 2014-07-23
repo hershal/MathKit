@@ -51,11 +51,11 @@ auto MKGaussFwdElimination(MKMatrix_t &A, MKVector_t &b, std::size_t k) -> void 
     }
 }
 
-auto MKGaussBwdSubstitution(MKMatrix_t &A, MKVector_t &b, MKVector_p x) -> void {
+auto MKGaussBwdSubstitution(MKMatrix_t &A, MKVector_t &b, MKVector_t &x) -> void {
     std::size_t n = A.size();
     float tmp;
 
-    (*x)[n-1] = b[n-1] / A[n-1][n-1];
+    x[n-1] = b[n-1] / A[n-1][n-1];
 
     /* Due to the unsigned nature of k, I can't compare against --0 (-1) */
     for (auto k=n-2; k<n-1; --k) {
@@ -64,25 +64,25 @@ auto MKGaussBwdSubstitution(MKMatrix_t &A, MKVector_t &b, MKVector_p x) -> void 
         tmp = 0.0;
 
         for (auto j=k+1; j<n; ++j) {
-            tmp += A[k][j] * (*x)[j];
+            tmp += A[k][j] * x[j];
         }
 
-        (*x)[k] = (b[k] - tmp) / A[k][k];
+        x[k] = (b[k] - tmp) / A[k][k];
     }
 }
 
-auto MKGaussElim(MKMatrix_p A, MKVector_p b, MKVector_p x) -> void {
-    std::size_t n = A->size();
+auto MKGaussElim(MKMatrix_t &A, MKVector_t &b, MKVector_t &x) -> void {
+    std::size_t n = A.size();
     std::size_t p;
 
-    if (n != b->size() || n != x->size()) {
+    if (n != b.size() || n != x.size()) {
         throw std::length_error("Matrix-Vector-Vector lengths did not match");
     }
 
     MKMatrix_t A_cpy = MKVector<MKVector<float> >(n, MKVector<float>(n));
     MKVector_t b_cpy = MKVector <float>(n);
-    A_cpy = (*A);
-    b_cpy = (*b);
+    A_cpy = A;
+    b_cpy = b;
 
     for (auto k=0; k<n-1; ++k) {
         p = MKGaussPivotIndex(A_cpy, k);
