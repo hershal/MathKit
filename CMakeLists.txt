@@ -13,11 +13,11 @@ add_executable (t_mkargument ${T_MKArgument-src})
 set (T_MKVector-src T_MKVector.cpp)
 add_executable (t_mkvector ${T_MKVector-src})
 
-# Nested MKVector Test
+# Nested MKVector Tests
 set (T_MKMatrix-src T_MKMatrix.cpp)
 add_executable (t_mkmatrix ${T_MKMatrix-src})
 
-# Nested MKVector Test
+# MKGaussElim Tests
 set (T_MKGaussElim-src T_MKGaussElim.cpp MKGaussElim.cpp)
 add_executable (t_mkgausselim ${T_MKGaussElim-src})
 target_link_libraries (t_mkgausselim floatlib)
