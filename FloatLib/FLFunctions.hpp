@@ -6,5 +6,7 @@
 auto inline FLAbsoluteError(float a, float b) -> float;
 auto inline FLRelativeError(float a, float b) -> float;
 auto FLAlmostEqualRelative(float a, float b, float epsilon) -> bool;
+auto inline FLSwapXOR(float &a, float &b) -> void;
+auto inline FLSwap(float &a, float &b) -> void;
 
 #endif /* FL_FUNCTIONS_HPP */

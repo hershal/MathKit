@@ -32,3 +32,19 @@ auto FLAlmostEqualRelative(float a, float b, float epsilon) -> bool {
 
     return false;
 }
+
+/* Test if this is faster than FLSwap */
+auto inline FLSwapXOR(float &a, float &b) -> void {
+
+    unsigned char *c = reinterpret_cast<unsigned char *>(&a);
+    unsigned char *d = reinterpret_cast<unsigned char *>(&b);
+    for (auto i=0; i<sizeof(float); ++i) {
+        (((c[i]) ^ (d[i])) && ((d[i]) ^= (c[i]) ^= (d[i]), (c[i]) ^= (d[i])));
+    }
+}
+
+auto inline FLSwap(float &a, float &b) -> void {
+    const float c = a;
+    a = b;
+    b = c;
+}
