@@ -42,7 +42,10 @@ auto MKGaussFwdElimination(MKMatrix_p A, MKVector_p b, std::size_t k) -> void {
         scaling_coef = ((*A)[i][k])/((*A)[k][k]);
         (*b)[i] = (*b)[i] - ((*b)[k] * scaling_coef);
 
-        for (auto j=k; j<n; ++j) {
+        /* Since we *know* that the pivots' value will be 1 , we can
+           save a few cycles and not update the pivots since it isn't
+           necessary for correctness. */
+        for (auto j=k+1; j<n; ++j) {
             (*A)[i][j] -= scaling_coef*(*A)[k][j];
         }
     }
