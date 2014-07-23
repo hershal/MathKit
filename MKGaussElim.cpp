@@ -23,6 +23,7 @@ auto MKGaussRowExchange(MKMatrix_p A, MKVector_p b, std::size_t k, std::size_t p
     MKVector<float> tmp_A_val = (*A)[k];
     float tmp_b_val = (*b)[k];
 
+    /* Possible speedup: Use an FLSwap method */
     (*b)[k] = (*b)[p];
     (*b)[p] = tmp_b_val;
 
@@ -30,8 +31,7 @@ auto MKGaussRowExchange(MKMatrix_p A, MKVector_p b, std::size_t k, std::size_t p
     (*A)[p] = tmp_A_val;
 }
 /*! \brief Utilizes forward-elimination techniques to create an
-  upper-triangular matrix.
-
+           upper-triangular matrix.
   /param k the row index at which to start the forward elimination
  */
 auto MKGaussFwdElimination(MKMatrix_p A, MKVector_p b, std::size_t k) -> void {
