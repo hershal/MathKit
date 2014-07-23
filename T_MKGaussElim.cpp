@@ -73,6 +73,19 @@ int main() {
     std::cout << "exchanged vec_copy" << std::endl;
     std::cout << (*vec_copy).to_string(", ") << std::endl;
 
+    std::cout << std::endl;
+
+    (*mat_copy) = (*mat);
+    (*vec_copy) = (*vec);
+    std::cout << "gaussian elim" << std::endl;
+    MKGaussElim(mat_copy, vec_copy, sol);
+    std::cout << "elim'd mat_copy" << std::endl;
+    std::cout << (*mat_copy).to_string("\n") << std::endl;
+    std::cout << "elim'd vec_copy" << std::endl;
+    std::cout << (*vec_copy).to_string(", ") << std::endl;
+    std::cout << "elim'd sol" << std::endl;
+    std::cout << (*sol).to_string(", ") << std::endl;
+
     std::cout << "test completed" << std::endl;
     return 0;
 }

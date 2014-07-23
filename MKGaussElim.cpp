@@ -69,6 +69,28 @@ auto MKGaussBwdSubstitution(MKMatrix_p A, MKVector_p b, MKVector_p x) -> void {
 }
 
 auto MKGaussElim(MKMatrix_p A, MKVector_p b, MKVector_p x) -> void {
+    std::size_t n = A->size();
+    std::size_t p;
 
+    if (n != b->size() || n != x->size()) {
+        throw std::length_error("Matrix-Vector-Vector lengths did not match");
+    }
+
+    for (auto k=0; k<n-1; ++k) {
+        p = MKGaussPivotIndex(A, k);
+
+        /* If we find a pivot here which is greater than the current
+           index, exchange rows */
+        if ((p>k) && (p<n)) {
+            MKGaussRowExchange(A, b, k, p);
+        }
+        MKGaussFwdElimination(A, b, k);
+    }
+
+    if (FLAlmostEqualRelative((*A)[n-1][n-1], 0.0, epsilon)) {
+        throw std::runtime_error("Infinitely Many Solutions");
+    }
+
+    MKGaussBwdSubstitution(A, b, x);
 }
 
