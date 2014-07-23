@@ -1,6 +1,11 @@
 /*! MathKit Vector Class */
 
+#ifndef MK_VECTOR
+#define MK_VECTOR
+
 #include <vector>
+#include <string>
+#include <sstream>
 
 template <class T>
 class MKVector {
@@ -179,3 +184,5 @@ auto fma(const MKVector<T>& x, const MKVector<T>& y, const MKVector<T>& z)
     for(int i=0; i<x.size(); i++) (*result)[i] = fma(x[i], y[i], z[i]);
     return result;
 }
+
+#endif /* MK_VECTOR */
