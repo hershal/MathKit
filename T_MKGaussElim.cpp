@@ -51,14 +51,15 @@ int main() {
 
     auto row_exchange_1 = 1;
     auto row_exchange_2 = 2;
-    MKGaussRowExchange(mat, vec, row_exchange_1, row_exchange_2);
-    std::cout << "after exchanging row " << row_exchange_1
-              << " and " << row_exchange_2 << std::endl;
-    
-    std::cout << "exchanged matrix" << std::endl;
-    std::cout << (*mat).to_string("\n") << std::endl;
-    std::cout << "exchanged vector" << std::endl;
-    std::cout << (*vec).to_string(", ") << std::endl;
+    auto mat_copy = mat;
+    auto vec_copy = vec;
+    std::cout << "exchanging row " << row_exchange_1 << " and "
+              << row_exchange_2 << ":" << std::endl;
+    MKGaussRowExchange(mat_copy, vec_copy, row_exchange_1, row_exchange_2);
+    std::cout << "exchanged mat_copy" << std::endl;
+    std::cout << (*mat_copy).to_string("\n") << std::endl;
+    std::cout << "exchanged vec_copy" << std::endl;
+    std::cout << (*vec_copy).to_string(", ") << std::endl;
 
     std::cout << "test completed" << std::endl;
     return 0;
