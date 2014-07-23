@@ -52,7 +52,7 @@ auto MKGaussBwdSubstitution(MKMatrix_p A, MKVector_p b, MKVector_p x, std::size_
 
 }
 
-auto MKGaussElim(MKMatrix_p A, MKVector_p b, MKVector_p x) -> std::size_t {
-    return 0;
+auto MKGaussElim(MKMatrix_p A, MKVector_p b, MKVector_p x) -> void {
+
 }
 
