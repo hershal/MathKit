@@ -1,17 +1,17 @@
 #include <cmath>
 
-#include "MKFloatLib.hpp"
+#include "FLFunctions.hpp"
 
-auto inline MFAbsoluteError(float a, float b) -> float {
+auto inline FLAbsoluteError(float a, float b) -> float {
     return fabs(a - b);
 }
 
-auto inline MFRelativeError(float a, float b) -> float {
+auto inline FLRelativeError(float a, float b) -> float {
     return fabs((a - b)/b);
 }
 
 /* Non-optimal: Not recommended */
-auto MFAlmostEqualRelative(float a, float b, float epsilon) -> bool {
+auto FLAlmostEqualRelative(float a, float b, float epsilon) -> bool {
 
     /* Remove a division-by-zero possibility */
     if (a == b) {
@@ -21,9 +21,9 @@ auto MFAlmostEqualRelative(float a, float b, float epsilon) -> bool {
     /* We want to divide by the largest number to minimize roundoff error */
     float relative_error;
     if (fabs(a) > fabs(b)) {
-        relative_error = MFRelativeError(b, a);
+        relative_error = FLRelativeError(b, a);
     } else {
-        relative_error = MFRelativeError(a, b);
+        relative_error = FLRelativeError(a, b);
     }
 
     if (relative_error <= epsilon) {

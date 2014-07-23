@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.0)
 set (CMAKE_CXX_FLAGS "-std=c++11 -stdlib=libc++")
 include_directories ("/opt/local/include")
 include_directories ("./TestKit")
+include_directories ("./FloatLib")
+add_subdirectory (./FloatLib floatlib)
 
 # MKArgument Tests
 set (T_MKArgument-src T_MKArgument.cpp)
@@ -16,5 +18,6 @@ set (T_MKMatrix-src T_MKMatrix.cpp)
 add_executable (t_mkmatrix ${T_MKMatrix-src})
 
 # Nested MKVector Test
-set (T_MKGaussElim-src T_MKGaussElim.cpp MKGaussElim.cpp MKFloatLib.cpp)
+set (T_MKGaussElim-src T_MKGaussElim.cpp MKGaussElim.cpp)
 add_executable (t_mkgausselim ${T_MKGaussElim-src})
+target_link_libraries (t_mkgausselim floatlib)

@@ -3,7 +3,7 @@
 #include <cmath>
 
 #include "MKGaussElim.hpp"
-#include "MKFloatLib.hpp"
+#include "FLFunctions.hpp"
 
 const float epsilon = pow(10, -6);
 
@@ -12,7 +12,7 @@ const float epsilon = pow(10, -6);
 auto MKGaussPivotIndex(MKMatrix_p A, int k) -> int {
     std::size_t i = k;
     std::size_t n = (*A).size();
-    while ((i<n) && MFAlmostEqualRelative((*A)[i][k], 0.0, epsilon)) {
+    while ((i<n) && FLAlmostEqualRelative((*A)[i][k], 0.0, epsilon)) {
         ++i;
     }
 
