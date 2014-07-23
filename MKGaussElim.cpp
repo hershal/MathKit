@@ -1,6 +1,7 @@
 /* MathKit Gaussian Elimination Implemenation */
 
 #include <cmath>
+#include <iostream>
 
 #include "MKGaussElim.hpp"
 #include "FLFunctions.hpp"
@@ -46,7 +47,7 @@ auto MKGaussFwdElimination(MKMatrix_t &A, MKVector_t &b, std::size_t k) -> void 
            save a few cycles and not update the pivots since it isn't
            necessary for correctness. */
         for (auto j=k+1; j<n; ++j) {
-            A[i][j] -= scaling_coef*A[k][j];
+            A[i][j] -= scaling_coef * (A[k][j]);
         }
     }
 }
@@ -94,6 +95,11 @@ auto MKGaussElim(MKMatrix_t &A, MKVector_t &b, MKVector_t &x) -> void {
         }
         MKGaussFwdElimination(A_cpy, b_cpy, k);
     }
+
+    std::cout << "WHAT" << std::endl;
+    std::cout << A_cpy.to_string("\n") << std::endl;
+    std::cout << b_cpy.to_string(", ") << std::endl;
+    std::cout << "WHAT" << std::endl;
 
     if (FLAlmostEqualRelative(A_cpy[n-1][n-1], 0.0, epsilon)) {
         throw std::runtime_error("Infinitely Many Solutions");
