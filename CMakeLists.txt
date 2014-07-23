@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-set (CMAKE_CXX_FLAGS "-std=c++11 -stdlib=libc++")
+set (CMAKE_CXX_FLAGS "-std=c++1y -stdlib=libc++")
 include_directories ("/opt/local/include")
 include_directories ("./TestKit")
 include_directories ("./FloatLib")
