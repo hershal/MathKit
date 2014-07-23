@@ -19,21 +19,21 @@ int main() {
         (vector_len, MKVector<float>(vector_len));
     MKVector_p vec = std::make_shared<MKVector <float> >(vector_len);
 
-    (*vec)[0] = 0;
+    (*vec)[0] = 9;
     (*vec)[1] = 1;
-    (*vec)[2] = 2;
+    (*vec)[2] = 35;
 
-    (*mat)[0][0] = 11;
-    (*mat)[0][1] = 12;
-    (*mat)[0][2] = 13;
+    (*mat)[0][0] = 1;
+    (*mat)[0][1] = 3;
+    (*mat)[0][2] = 1;
 
-    (*mat)[1][0] = 0.0;
-    (*mat)[1][1] = 0.0;
-    (*mat)[1][2] = 23;
+    (*mat)[1][0] = 1;
+    (*mat)[1][1] = 1;
+    (*mat)[1][2] = -1;
 
-    (*mat)[2][0] = 31;
-    (*mat)[2][1] = 32;
-    (*mat)[2][2] = 33;
+    (*mat)[2][0] = 3;
+    (*mat)[2][1] = 11;
+    (*mat)[2][2] = 5;
 
     std::cout << "original matrix" << std::endl;
     std::cout << (*mat).to_string("\n") << std::endl;
