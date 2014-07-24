@@ -11,12 +11,12 @@
 #include <cmath>
 
 #include "MKVector.hpp"
-#include "TKNumberedAttribute.hpp"
+#include "TKCumulableAttribute.hpp"
 
 #include "T_MKVector.hpp"
 
 auto fused_multiply_add_test(std::size_t vector_len)
-    -> std::shared_ptr<TKNumberedAttribute<std::size_t> >;
+    -> std::shared_ptr<TKCumulableAttribute<std::size_t> >;
 
 int main() {
 
@@ -27,7 +27,7 @@ int main() {
     float insertion_percentage_out_of_bounds = 0.25;
 
     /* Fill Test */
-    auto fill_test_results = TKNumberedAttribute<std::size_t>();
+    auto fill_test_results = TKCumulableAttribute<std::size_t>();
     for (auto i=0; i<len; ++i) {
         fill_test_results += *(fill_test(vector_len));
     }
@@ -35,7 +35,7 @@ int main() {
         fill_test_results.to_string() << "\n" << std::endl;
 
     /* Insertion Test */
-    auto insertion_test_results = TKNumberedAttribute<std::size_t>();
+    auto insertion_test_results = TKCumulableAttribute<std::size_t>();
     for (auto i=0; i<len; ++i) {
         insertion_test_results +=
             *random_insertion_test(vector_len, insertion_num_insertions,
@@ -46,7 +46,7 @@ int main() {
               << "\n" << std::endl;
 
     /* Arithmetic Test */
-    auto arithmetic_test_results = TKNumberedAttribute<std::size_t>();
+    auto arithmetic_test_results = TKCumulableAttribute<std::size_t>();
     for (auto i=0; i<len; ++i) {
         arithmetic_test_results += *(arithmetic_test(vector_len));
     }
@@ -55,7 +55,7 @@ int main() {
               << "\n" << std::endl;
 
     /* Fused Arithmetic-Assignment Test */
-    auto fused_arithmetic_assignment_test_results = TKNumberedAttribute<std::size_t>();
+    auto fused_arithmetic_assignment_test_results = TKCumulableAttribute<std::size_t>();
     for (auto i=0; i<len; ++i) {
         fused_arithmetic_assignment_test_results +=
             *(fused_arithmetic_assignment_test(vector_len));
@@ -65,7 +65,7 @@ int main() {
               << "\n" << std::endl;
 
     /* Fused Multiply-Add Test */
-    auto fused_multiply_add_test_results = TKNumberedAttribute<std::size_t>();
+    auto fused_multiply_add_test_results = TKCumulableAttribute<std::size_t>();
     for (auto i=0; i<len; ++i) {
         fused_multiply_add_test_results +=
             *(fused_multiply_add_test(vector_len));
@@ -78,7 +78,7 @@ int main() {
 
 auto random_insertion_test(std::size_t vector_len, std::size_t num_insertions,
                            float percentage_out_of_bounds)
-    -> std::shared_ptr<TKNumberedAttribute<std::size_t> > {
+    -> std::shared_ptr<TKCumulableAttribute<std::size_t> > {
 
     std::srand(std::time(0));
     std::size_t num_hits = 0;
@@ -121,7 +121,7 @@ auto random_insertion_test(std::size_t vector_len, std::size_t num_insertions,
     /* std::printf("%s\n", mat.to_string("\n").c_str()); */
 
     /* Generate result receipt */
-    auto m = std::make_shared<TKNumberedAttribute<std::size_t> >();
+    auto m = std::make_shared<TKCumulableAttribute<std::size_t> >();
     (*m)[k_num_misses] = num_misses;
     (*m)[k_num_hits] = num_hits;
     (*m)[k_num_total] = num_total;
@@ -129,7 +129,7 @@ auto random_insertion_test(std::size_t vector_len, std::size_t num_insertions,
 }
 
 auto arithmetic_test(std::size_t vector_len)
-    -> std::shared_ptr<TKNumberedAttribute<std::size_t> > {
+    -> std::shared_ptr<TKCumulableAttribute<std::size_t> > {
 
     std::srand(std::time(0));
     std::size_t num_total = 0;
@@ -175,13 +175,13 @@ auto arithmetic_test(std::size_t vector_len)
     }
 
     /* Generate result receipt */
-    auto m = std::make_shared<TKNumberedAttribute<std::size_t> >();
+    auto m = std::make_shared<TKCumulableAttribute<std::size_t> >();
     (*m)[k_num_total] = num_total;
     return m;
 }
 
 auto fused_arithmetic_assignment_test(std::size_t vector_len)
-    -> std::shared_ptr<TKNumberedAttribute<std::size_t> > {
+    -> std::shared_ptr<TKCumulableAttribute<std::size_t> > {
 
     std::srand(std::time(0));
     std::size_t num_total = 0;
@@ -245,13 +245,13 @@ auto fused_arithmetic_assignment_test(std::size_t vector_len)
         }
     }
     /* Generate result receipt */
-    auto m = std::make_shared<TKNumberedAttribute<std::size_t> >();
+    auto m = std::make_shared<TKCumulableAttribute<std::size_t> >();
     (*m)[k_num_total] = num_total;
     return m;
 }
 
 auto fill_test(std::size_t vector_len)
-    -> std::shared_ptr<TKNumberedAttribute<std::size_t> > {
+    -> std::shared_ptr<TKCumulableAttribute<std::size_t> > {
 
     std::srand(std::time(0));
     std::size_t num_total = 0;
@@ -281,13 +281,13 @@ auto fill_test(std::size_t vector_len)
     }
 
     /* Generate result receipt */
-    auto m = std::make_shared<TKNumberedAttribute<std::size_t> >();
+    auto m = std::make_shared<TKCumulableAttribute<std::size_t> >();
     (*m)[k_num_total] = num_total;
     return m;
 }
 
 auto fused_multiply_add_test(std::size_t vector_len)
-    -> std::shared_ptr<TKNumberedAttribute<std::size_t> > {
+    -> std::shared_ptr<TKCumulableAttribute<std::size_t> > {
 
     std::srand(std::time(0));
     std::size_t num_total = 0;
@@ -324,7 +324,7 @@ auto fused_multiply_add_test(std::size_t vector_len)
     }
 
     /* Generate result receipt */
-    auto m = std::make_shared<TKNumberedAttribute<std::size_t> >();
+    auto m = std::make_shared<TKCumulableAttribute<std::size_t> >();
     (*m)[k_num_total] = num_total;
     return m;
 }

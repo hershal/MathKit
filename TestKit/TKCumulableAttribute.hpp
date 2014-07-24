@@ -1,25 +1,25 @@
-/*! TestKit TKNumberedAttribute Header */
+/*! TestKit TKCumulableAttribute Header */
 
-#ifndef TK_NUMBERED_ATTRIBUTE_HPP
-#define TK_NUMBERED_ATTRIBUTE_HPP
+#ifndef TK_CUMULABLE_ATTRIBUTE_HPP
+#define TK_CUMULABLE_ATTRIBUTE_HPP
 
 #include "TKBaseAttribute.hpp"
 #include <map>
 
 template <typename T>
-class TKNumberedAttribute : public TKBaseAttribute {
+class TKCumulableAttribute : public TKBaseAttribute {
 public:
-    TKNumberedAttribute() {}
-    ~TKNumberedAttribute() {}
-    auto operator+ (const TKNumberedAttribute& addend) -> TKNumberedAttribute {
-        auto sum = TKNumberedAttribute();
+    TKCumulableAttribute() {}
+    ~TKCumulableAttribute() {}
+    auto operator+ (const TKCumulableAttribute& addend) -> TKCumulableAttribute {
+        auto sum = TKCumulableAttribute();
         for (auto at : attribute) {
             attribute[at.first] = at.second + (*addend)[at.first];
         }
         return *this;
     }
 
-    auto operator+= (const TKNumberedAttribute& addend) -> TKNumberedAttribute& {
+    auto operator+= (const TKCumulableAttribute& addend) -> TKCumulableAttribute& {
         for (auto at : addend.repr()) {
             attribute[at.first] = at.second + (attribute)[at.first];
         }
@@ -55,4 +55,4 @@ private:
     std::map<std::string, T> attribute;
 };
 
-#endif /* TK_NUMBERED_ATTRIBUTE_HPP */
+#endif /* TK_CUMULABLE_ATTRIBUTE_HPP */

@@ -10,7 +10,7 @@
 #include <boost/assert.hpp>
 
 #include "MKGaussElim.hpp"
-#include "TKNumberedAttribute.hpp"
+#include "TKCumulableAttribute.hpp"
 
 int main() {
 
