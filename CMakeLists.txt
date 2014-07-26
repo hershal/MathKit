@@ -17,6 +17,10 @@ add_executable (t_mkvector ${T_MKVector-src})
 set (T_Nested_MKVector-src T_Nested_MKVector.cpp)
 add_executable (t_nested_mkvector ${T_Nested_MKVector-src})
 
+# MKMatrix Tests
+set (T_MKMatrix-src T_MKMatrix.cpp)
+add_executable (t_mkmatrix ${T_MKMatrix-src})
+
 # MKGaussElim Tests
 set (T_MKGaussElim-src T_MKGaussElim.cpp MKGaussElim.cpp)
 add_executable (t_mkgausselim ${T_MKGaussElim-src})

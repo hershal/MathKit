@@ -6,10 +6,28 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <iostream>
 
 template <class T>
 class MKVector {
 public:
+    /*! MKVector default constructor */
+    MKVector() {
+        /*!
+          REMEMBER: you cannot resize an existing MKVector, so be aware this
+          is not particularly useful, especially since MKVector does not know
+          what kind of data you're putting into it. I.e., if you have a MKVector
+          of a map (or something), the outer-most MKVector does not know this
+          and thus cannot recursively resize the underlying data structures.
+
+          That's just something you should be aware of before you use the
+          default constructor.
+        */
+        std::cout << "IMPLICIT INSTANTIATION" << std::endl;
+
+        array.clear();
+    }
+
     /*! MKVector constructor with size */
     MKVector(std::size_t n) {
         array.resize(n);
@@ -82,7 +100,10 @@ public:
 
     /*! MKVector assignment operator */
     auto operator= (const MKVector<T>& v) -> MKVector<T>& {
+        std::cout << "VEC: PRE: THIS: " << size() << "  THAT: " << v.size() << std::endl;
         array = v.to_vector();
+        std::cout << "VEC: " << to_string() << std::endl;
+        std::cout << "VEC: POST: THIS: " << size() << "  THAT: " << v.size() << std::endl;
         return *this;
     }
 
@@ -167,7 +188,7 @@ public:
         return *this;
     }
 
-private:
+protected:
     /*! pointer to elements of MKVector */
     std::vector<T> array;
 };
