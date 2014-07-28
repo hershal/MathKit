@@ -39,17 +39,19 @@ public:
         return attribute;
     }
 
-auto to_string(std::string sep1 = "=", std::string sep2 = "\n") -> std::string {
-    auto stream = std::stringstream();
+    auto to_string(std::string prefix = "", std::string infix = "=", std::string postfix = "\n")
+        -> std::string override {
 
-    for (auto iter = attribute.begin(); iter != attribute.end(); ++iter) {
-        if (iter != attribute.begin()) {
-            stream << sep2;
+        auto stream = std::stringstream();
+
+        for (auto iter = attribute.begin(); iter != attribute.end(); ++iter) {
+            if (iter != attribute.begin()) {
+                stream << postfix;
+            }
+            stream << prefix << iter->first << infix << iter->second;
         }
-        stream << iter->first << sep1 << iter->second;
+        return stream.str();
     }
-    return stream.str();
-}
 
 private:
     std::map<std::string, T> attribute;

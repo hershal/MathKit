@@ -7,7 +7,9 @@ class TKBaseAttribute {
 public:
     TKBaseAttribute() {}
     ~TKBaseAttribute() {}
-    virtual std::string to_string(std::string sep1, std::string sep2) = 0;
+    virtual std::string to_string(std::string prefix,
+                   std::string infix,
+                   std::string postfix) = 0;
 private:
     /* Nothing Here */
 };
