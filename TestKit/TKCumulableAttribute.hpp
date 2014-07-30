@@ -7,11 +7,11 @@
 #include <map>
 
 template <typename T>
-class TKCumulableAttribute : public TKBaseAttribute<T> {
+class TKCumulableAttribute : public TKBaseAttribute {
 public:
-    TKCumulableAttribute() : TKBaseAttribute<T>() {}
+    TKCumulableAttribute() : TKBaseAttribute() {}
     ~TKCumulableAttribute() {}
-    auto operator+ (const TKBaseAttribute<T>& addend) -> TKBaseAttribute<T> {
+    auto operator+ (const TKCumulableAttribute<T>& addend) -> TKCumulableAttribute<T> {
         auto sum = TKCumulableAttribute();
         for (auto at : this->attribute) {
             this->attribute[at.first] = at.second + (*addend)[at.first];
@@ -19,7 +19,7 @@ public:
         return *this;
     }
 
-    auto operator+= (const TKBaseAttribute<T>& addend) -> TKBaseAttribute<T>& {
+    auto operator+= (const TKCumulableAttribute<T>& addend) -> TKCumulableAttribute<T>& {
         for (auto at : addend.repr()) {
             this->attribute[at.first] = at.second + (this->attribute)[at.first];
         }
@@ -56,7 +56,7 @@ public:
     }
 
 private:
-    /* Nothing here */
+    std::map<std::string, T> attribute;
 };
 
 #endif /* TK_CUMULABLE_ATTRIBUTE_HPP */
