@@ -9,7 +9,11 @@
 template <typename T>
 class TKCumulableAttribute : public TKBaseAttribute {
 public:
-    TKCumulableAttribute() : TKBaseAttribute() {}
+    TKCumulableAttribute(const std::string name = "NO_NAME",
+                         const std::string prefix = "",
+                         const std::string infix = "=",
+                         const std::string postfix = "\n")
+        : TKBaseAttribute(name, prefix, infix, postfix) {}
     ~TKCumulableAttribute() {}
     auto operator+ (const TKCumulableAttribute<T>& addend) -> TKCumulableAttribute<T> {
         auto sum = TKCumulableAttribute();
@@ -39,21 +43,24 @@ public:
         return this->attribute;
     }
 
-    auto to_string(const std::string prefix = "", 
-                   const std::string infix = "=",
-                   const std::string postfix = "\n") const
-        -> const std::string {
+    auto to_string(const std::string pre_prefix,
+                   const std::string post_postfix)
+        const -> const std::string {
 
         auto stream = std::stringstream();
 
         for (auto iter = this->attribute.begin(); iter != this->attribute.end(); ++iter) {
             if (iter != this->attribute.begin()) {
-                stream << postfix;
+                stream << this->m_postfix << post_postfix;
             }
-            stream << prefix << iter->first << infix << iter->second;
+            stream << pre_prefix << this->m_prefix
+                   << iter->first << this->m_infix
+                   << iter->second;
         }
         return stream.str();
     }
+    auto get_type() -> TKAttrType { return cumulable; }
+    auto get_type_string() -> std::string { return "cumulable"; }
 
 private:
     std::map<std::string, T> attribute;
