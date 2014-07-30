@@ -14,7 +14,7 @@ auto TKAttributeContainer::add(const std::shared_ptr<TKBaseAttribute> a) -> void
     m_attributes.push_back(a);
 }
 
-auto TKAttributeContainer::to_string()
+auto TKAttributeContainer::to_string(std::string tab)
     -> const std::string {
 
     std::stringstream stream;
@@ -23,7 +23,7 @@ auto TKAttributeContainer::to_string()
             stream << "\n\n";
         }
         stream << (*iter)->get_name() << ":\n";
-        stream << (*iter)->to_string("  ");
+        stream << (*iter)->to_string(tab);
     }
     return stream.str();
 }

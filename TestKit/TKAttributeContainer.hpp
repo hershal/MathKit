@@ -11,7 +11,7 @@ public:
     TKAttributeContainer();
     ~TKAttributeContainer();
     auto add(const std::shared_ptr<TKBaseAttribute> a) -> void;
-    auto to_string() -> const std::string;
+    auto to_string(std::string tab = "    ") -> const std::string;
 
 private:
     std::vector<std::shared_ptr<TKBaseAttribute> > m_attributes;
