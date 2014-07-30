@@ -11,12 +11,12 @@ template <class T>
 class MKVector {
 public:
     /*! MKVector constructor with size */
-    MKVector(std::size_t n) {
+    MKVector(const std::size_t n) {
         array.resize(n);
     }
 
     /*! MKVector constructor with size and inner argument constructor */
-    MKVector(std::size_t n, const T& t) {
+    MKVector(const std::size_t n, const T& t) {
         array.resize(n, t);
     }
 
@@ -35,13 +35,13 @@ public:
         return array;
     }
 
-    friend auto operator<< (std::ostream& os, MKVector<T>& v) -> std::ostream& {
+    friend auto operator<< (std::ostream& os, const MKVector<T>& v) -> std::ostream& {
         os << v.to_string();
         return os;
     }
 
     /*! MKVector string printer */
-    auto to_string(std::string sep = ", ") -> const std::string {
+    auto to_string(const std::string sep = ", ") const -> const std::string {
         std::stringstream out;
         out << "[";
         for (auto i=0; i<size(); ++i) {
@@ -87,7 +87,7 @@ public:
     }
 
     /*! MKVector fill-vector-with-scalar operator */
-    auto operator= (T x) -> MKVector<T>& {
+    auto operator= (const T x) -> MKVector<T>& {
         for(int i=0; i<size(); i++) {
             array[i] = x;
         }
@@ -95,7 +95,7 @@ public:
     }
 
     /*! MKVector addition operator */
-    auto operator+ (const MKVector<T>& v) -> MKVector<T> {
+    auto operator+ (const MKVector<T>& v) const -> MKVector<T> {
         if(size() != v.size()) {
             throw std::out_of_range("MKVector index is invalid");
         }
@@ -114,7 +114,7 @@ public:
     }
 
     /*! MKVector subtraction operator */
-    auto operator- (const MKVector<T>& v) -> MKVector<T> {
+    auto operator- (const MKVector<T>& v) const -> MKVector<T> {
         if(size() != v.size())
             throw std::out_of_range("MKVector index is invalid");
         MKVector<T> result(*this);
@@ -132,7 +132,7 @@ public:
     }
 
     /*! MKVector multiply operator */
-    auto operator* (const MKVector<T>& v) -> MKVector<T> {
+    auto operator* (const MKVector<T>& v) const -> MKVector<T> {
         if(size() != v.size())
             throw std::out_of_range("MKVector index is invalid");
         MKVector<T> result(*this);
@@ -150,7 +150,7 @@ public:
     }
 
     /*! MKVector division operator */
-    auto operator/ (const MKVector<T>& v) -> MKVector<T> {
+    auto operator/ (const MKVector<T>& v) const -> MKVector<T> {
         if(size() != v.size())
             throw std::out_of_range("MKVector index is invalid");
         MKVector<T> result(*this);
