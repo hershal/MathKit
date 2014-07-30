@@ -22,39 +22,44 @@ int main() {
     float insertion_percentage_out_of_bounds = 0.25;
 
     /* Fill Test */
-    auto fill_test_results = TKCumulableAttribute<std::size_t>();
+    std::shared_ptr<TKBaseAttribute<std::size_t> > fill_test_results =
+        std::make_shared<TKCumulableAttribute<std::size_t> >();
     for (auto i=0; i<len; ++i) {
-        fill_test_results += *(fill_test(vector_len));
+        *(fill_test_results) += *(fill_test(vector_len));
     }
     std::cout << "fill test\n" <<
-        fill_test_results.to_string() << "\n" << std::endl;
+        fill_test_results->to_string() << "\n" << std::endl;
 
     /* Insertion Test */
-    auto insertion_test_results = TKCumulableAttribute<std::size_t>();
+    std::shared_ptr<TKBaseAttribute<std::size_t> > insertion_test_results =
+        std::make_shared<TKCumulableAttribute<std::size_t> >();
     for (auto i=0; i<len; ++i) {
-        insertion_test_results += *random_insertion_test(vector_len,
-                                                         insertion_num_insertions,
-                                                         insertion_percentage_out_of_bounds);
+        (*insertion_test_results) += *(random_insertion_test
+                                       (vector_len, insertion_num_insertions,
+                                        insertion_percentage_out_of_bounds));
     }
     std::cout << "insertion test\n" <<
-        insertion_test_results.to_string() << "\n" << std::endl;
+        insertion_test_results->to_string() << "\n" << std::endl;
 
     /* Arithmetic Test */
-    auto arithmetic_test_results = TKCumulableAttribute<std::size_t>();
+    std::shared_ptr<TKBaseAttribute<std::size_t> > arithmetic_test_results =
+        std::make_shared<TKCumulableAttribute<std::size_t> >();
     for (auto i=0; i<len; ++i) {
-        arithmetic_test_results += *(arithmetic_test(vector_len));
+        *(arithmetic_test_results) += *(arithmetic_test(vector_len));
     }
     std::cout << "arithmetic test\n" <<
-        arithmetic_test_results.to_string() << "\n" << std::endl;
+        arithmetic_test_results->to_string() << "\n" << std::endl;
 
     /* Fused Arithmetic-Assignment Test */
-    auto fused_arithmetic_assignment_test_results = TKCumulableAttribute<std::size_t>();
+    std::shared_ptr<TKBaseAttribute<std::size_t> > 
+        fused_arithmetic_assignment_test_results =
+        std::make_shared<TKCumulableAttribute<std::size_t> >();
     for (auto i=0; i<len; ++i) {
-        fused_arithmetic_assignment_test_results +=
+        *(fused_arithmetic_assignment_test_results) +=
             *(fused_arithmetic_assignment_test(vector_len));
     }
     std::cout << "fused arithmetic-assignment test\n" <<
-        fused_arithmetic_assignment_test_results.to_string()
+        fused_arithmetic_assignment_test_results->to_string()
               << "\n" << std::endl;
 }
 

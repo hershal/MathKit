@@ -7,45 +7,47 @@
 #include <map>
 
 template <typename T>
-class TKCumulableAttribute : public TKBaseAttribute {
+class TKCumulableAttribute : public TKBaseAttribute<T> {
 public:
-    TKCumulableAttribute() {}
+    TKCumulableAttribute() : TKBaseAttribute<T>() {}
     ~TKCumulableAttribute() {}
-    auto operator+ (const TKCumulableAttribute& addend) -> TKCumulableAttribute {
+    auto operator+ (const TKBaseAttribute<T>& addend) -> TKBaseAttribute<T> {
         auto sum = TKCumulableAttribute();
-        for (auto at : attribute) {
-            attribute[at.first] = at.second + (*addend)[at.first];
+        for (auto at : this->attribute) {
+            this->attribute[at.first] = at.second + (*addend)[at.first];
         }
         return *this;
     }
 
-    auto operator+= (const TKCumulableAttribute& addend) -> TKCumulableAttribute& {
+    auto operator+= (const TKBaseAttribute<T>& addend) -> TKBaseAttribute<T>& {
         for (auto at : addend.repr()) {
-            attribute[at.first] = at.second + (attribute)[at.first];
+            this->attribute[at.first] = at.second + (this->attribute)[at.first];
         }
         return *this;
     }
 
     auto operator[] (const std::string key) const -> const T {
-        return attribute.at(key);
+        return this->attribute.at(key);
     }
 
     auto operator[] (const std::string key) -> T& {
         // std::cout << "ADDED" << key  << std::endl;
-        return attribute[key];
+        return this->attribute[key];
     }
 
     auto repr() const -> const std::map<std::string, T> {
-        return attribute;
+        return this->attribute;
     }
 
-    auto to_string(std::string prefix = "", std::string infix = "=", std::string postfix = "\n")
-        -> std::string override {
+    auto to_string(const std::string prefix = "", 
+                   const std::string infix = "=",
+                   const std::string postfix = "\n") const
+        -> const std::string {
 
         auto stream = std::stringstream();
 
-        for (auto iter = attribute.begin(); iter != attribute.end(); ++iter) {
-            if (iter != attribute.begin()) {
+        for (auto iter = this->attribute.begin(); iter != this->attribute.end(); ++iter) {
+            if (iter != this->attribute.begin()) {
                 stream << postfix;
             }
             stream << prefix << iter->first << infix << iter->second;
@@ -54,7 +56,7 @@ public:
     }
 
 private:
-    std::map<std::string, T> attribute;
+    /* Nothing here */
 };
 
 #endif /* TK_CUMULABLE_ATTRIBUTE_HPP */
