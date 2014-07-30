@@ -18,6 +18,7 @@ target_link_libraries (t_mkvector testkit)
 # Nested MKVector Tests
 set (T_Nested_MKVector-src T_Nested_MKVector.cpp)
 add_executable (t_nested_mkvector ${T_Nested_MKVector-src})
+target_link_libraries (t_nested_mkvector testkit)
 
 # MKGaussElim Tests
 set (T_MKGaussElim-src T_MKGaussElim.cpp MKGaussElim.cpp)
