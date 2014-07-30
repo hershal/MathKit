@@ -13,6 +13,8 @@
 #include "MKVector.hpp"
 #include "TKCumulableAttribute.hpp"
 
+#include "TKAttributeContainer.hpp"
+
 #include "T_MKVector.hpp"
 
 auto fused_multiply_add_test(std::size_t vector_len)
@@ -26,54 +28,58 @@ int main() {
     std::size_t insertion_num_insertions = (float)(pow(100000.0, 0.5));
     float insertion_percentage_out_of_bounds = 0.25;
 
+    auto container = TKAttributeContainer();
+
     /* Fill Test */
-    auto fill_test_results = TKCumulableAttribute<std::size_t>();
+    auto fill_test_results =
+        std::make_shared<TKCumulableAttribute<std::size_t> >
+        ("Fill Test");
     for (auto i=0; i<len; ++i) {
-        fill_test_results += *(fill_test(vector_len));
+        *(fill_test_results) += *(fill_test(vector_len));
     }
-    std::cout << "fill test\n" <<
-        fill_test_results.to_string() << "\n" << std::endl;
+    container.add(fill_test_results);
 
     /* Insertion Test */
-    auto insertion_test_results = TKCumulableAttribute<std::size_t>();
+    auto insertion_test_results =
+        std::make_shared<TKCumulableAttribute<std::size_t> >
+        ("Insertion Test");
     for (auto i=0; i<len; ++i) {
-        insertion_test_results +=
+        *(insertion_test_results) +=
             *random_insertion_test(vector_len, insertion_num_insertions,
                                    insertion_percentage_out_of_bounds);
     }
-    std::cout << "insertion test\n"
-              << insertion_test_results.to_string()
-              << "\n" << std::endl;
+    container.add(insertion_test_results);
 
     /* Arithmetic Test */
-    auto arithmetic_test_results = TKCumulableAttribute<std::size_t>();
+    auto arithmetic_test_results =
+        std::make_shared<TKCumulableAttribute<std::size_t> >
+        ("Arithmetic Test");
     for (auto i=0; i<len; ++i) {
-        arithmetic_test_results += *(arithmetic_test(vector_len));
+        *(arithmetic_test_results) += *(arithmetic_test(vector_len));
     }
-    std::cout << "arithmetic test\n"
-              << arithmetic_test_results.to_string()
-              << "\n" << std::endl;
+    container.add(arithmetic_test_results);
 
     /* Fused Arithmetic-Assignment Test */
-    auto fused_arithmetic_assignment_test_results = TKCumulableAttribute<std::size_t>();
+    auto fused_arithmetic_assignment_test_results =
+        std::make_shared<TKCumulableAttribute<std::size_t> >
+        ("Fused Arithmetic-Assignment Test");
     for (auto i=0; i<len; ++i) {
-        fused_arithmetic_assignment_test_results +=
+        *(fused_arithmetic_assignment_test_results) +=
             *(fused_arithmetic_assignment_test(vector_len));
     }
-    std::cout << "fused arithmetic-assignment test\n"
-              << fused_arithmetic_assignment_test_results.to_string()
-              << "\n" << std::endl;
+    container.add(fused_arithmetic_assignment_test_results);
 
     /* Fused Multiply-Add Test */
-    auto fused_multiply_add_test_results = TKCumulableAttribute<std::size_t>();
+    auto fused_multiply_add_test_results =
+        std::make_shared<TKCumulableAttribute<std::size_t> >
+        ("Fused Multiply-Add Test");
     for (auto i=0; i<len; ++i) {
-        fused_multiply_add_test_results +=
+        *(fused_multiply_add_test_results) +=
             *(fused_multiply_add_test(vector_len));
     }
-    std::cout << "fused multiply-add test\n"
-              << fused_multiply_add_test_results.to_string()
-              << "\n" << std::endl;
+    container.add(fused_multiply_add_test_results);
 
+    std::cout << container.to_string() << std::endl;
 }
 
 auto random_insertion_test(std::size_t vector_len, std::size_t num_insertions,
