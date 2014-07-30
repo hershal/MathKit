@@ -26,30 +26,39 @@ int main() {
     auto container = TKAttributeContainer();
 
     /* Fill Test */
-    auto fill_test_results = std::make_shared<TKCumulableAttribute<std::size_t> >("Fill Test");
+    auto fill_test_results =
+        std::make_shared<TKCumulableAttribute<std::size_t> >
+        ("Fill Test");
     for (auto i=0; i<len; ++i) {
         *(fill_test_results) += *(fill_test(vector_len));
     }
     container.add(fill_test_results);
 
     /* Insertion Test */
-    auto insertion_test_results = std::make_shared<TKCumulableAttribute<std::size_t> >("Insertion Test");
+    auto insertion_test_results =
+        std::make_shared<TKCumulableAttribute<std::size_t> >
+        ("Insertion Test");
     for (auto i=0; i<len; ++i) {
-        *(insertion_test_results) += *(random_insertion_test
-                                       (vector_len, insertion_num_insertions,
-                                        insertion_percentage_out_of_bounds));
+        *(insertion_test_results) += 
+            *(random_insertion_test
+              (vector_len, insertion_num_insertions,
+               insertion_percentage_out_of_bounds));
     }
     container.add(insertion_test_results);
 
     /* Arithmetic Test */
-    auto arithmetic_test_results = std::make_shared<TKCumulableAttribute<std::size_t> >("Arithmetic Test");
+    auto arithmetic_test_results =
+        std::make_shared<TKCumulableAttribute<std::size_t> >
+        ("Arithmetic Test");
     for (auto i=0; i<len; ++i) {
         *(arithmetic_test_results) += *(arithmetic_test(vector_len));
     }
     container.add(arithmetic_test_results);
 
     /* Fused Arithmetic-Assignment Test */
-    auto fused_arithmetic_assignment_test_results = std::make_shared<TKCumulableAttribute<std::size_t> >("Fused Arithmetic-Assignment Test");
+    auto fused_arithmetic_assignment_test_results = 
+        std::make_shared<TKCumulableAttribute<std::size_t> >
+        ("Fused Arithmetic-Assignment Test");
     for (auto i=0; i<len; ++i) {
         *(fused_arithmetic_assignment_test_results) +=
             *(fused_arithmetic_assignment_test(vector_len));
