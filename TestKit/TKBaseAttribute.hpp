@@ -14,9 +14,9 @@ public:
     virtual auto to_string(const std::string pre_prefix = "",
                            const std::string post_postfix = "")
         const -> const std::string = 0;
-    auto get_name() -> std::string {return m_name;}
-    virtual auto get_type() -> TKAttrType { return base; }
-    virtual auto get_type_string() -> std::string { return "base"; }
+    auto get_name() const -> const std::string {return m_name;}
+    virtual auto get_type() const -> const TKAttrType { return base; }
+    virtual auto get_type_string() const -> const std::string { return "base"; }
 protected:
     std::string m_name;
     std::string m_prefix;

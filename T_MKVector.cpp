@@ -68,8 +68,8 @@ int main() {
     std::cout << container.to_string() << std::endl;
 }
 
-auto fused_arithmetic_assignment_test(std::size_t vector_len)
-    -> std::shared_ptr<TKCumulableAttribute<std::size_t> > {
+auto fused_arithmetic_assignment_test(const std::size_t vector_len)
+    -> const std::shared_ptr<TKCumulableAttribute<std::size_t> > {
 
     std::srand(std::time(0));
 
@@ -132,8 +132,8 @@ auto fused_arithmetic_assignment_test(std::size_t vector_len)
     return m;
 }
 
-auto arithmetic_test(std::size_t vector_len)
-    -> std::shared_ptr<TKCumulableAttribute<std::size_t> > {
+auto arithmetic_test(const std::size_t vector_len)
+    -> const std::shared_ptr<TKCumulableAttribute<std::size_t> > {
 
     std::srand(std::time(0));
 
@@ -178,9 +178,10 @@ auto arithmetic_test(std::size_t vector_len)
     return m;
 }
 
-auto random_insertion_test(std::size_t vector_len, std::size_t num_insertions,
-                           float percentage_out_of_bounds)
-    -> std::shared_ptr<TKCumulableAttribute<std::size_t> > {
+auto random_insertion_test(const std::size_t vector_len,
+                           const std::size_t num_insertions,
+                           const float percentage_out_of_bounds)
+    -> const std::shared_ptr<TKCumulableAttribute<std::size_t> > {
 
     std::srand(std::time(0));
     std::size_t num_hits = 0;
@@ -222,8 +223,8 @@ auto random_insertion_test(std::size_t vector_len, std::size_t num_insertions,
     return m;
 }
 
-auto fill_test(std::size_t vector_len)
-    -> std::shared_ptr<TKCumulableAttribute<std::size_t> > {
+auto fill_test(const std::size_t vector_len)
+    -> const std::shared_ptr<TKCumulableAttribute<std::size_t> > {
 
     std::srand(std::time(0));
     std::size_t num_total = 0;

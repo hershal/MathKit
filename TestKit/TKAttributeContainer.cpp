@@ -14,8 +14,8 @@ auto TKAttributeContainer::add(const std::shared_ptr<TKBaseAttribute> a) -> void
     m_attributes.push_back(a);
 }
 
-auto TKAttributeContainer::to_string(std::string tab)
-    -> const std::string {
+auto TKAttributeContainer::to_string(const std::string tab)
+    const -> const std::string {
 
     std::stringstream stream;
     for (auto iter = m_attributes.begin(); iter != m_attributes.end(); ++iter) {
