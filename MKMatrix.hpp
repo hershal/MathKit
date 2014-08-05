@@ -16,11 +16,11 @@ public:
         /* this->array = std::vector<MKVector<MKVector<T> > >(); */
         /* this->array.resize(n); */
         /* MKVector<MKVector<T> >(n, MKVector<float>(n)); */
-        std::cout << "mat inst: " << n
-                  << " vec inst: " << MKVector<MKVector<T> >::size()
-                  << " this inst: " << size()
-                  << " this_prt inst: " << this->array.size()
-                  << std::endl;
+        /* std::cout << "mat inst: " << n */
+        /*           << " vec inst: " << MKVector<MKVector<T> >::size() */
+        /*           << " this inst: " << size() */
+        /*           << " this_prt inst: " << this->array.size() */
+        /*           << std::endl; */
     }
 
     auto operator= (const MKMatrix<T>& v) -> MKMatrix<T>& {
