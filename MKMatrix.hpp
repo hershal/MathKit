@@ -12,27 +12,42 @@ typedef std::unique_ptr< MKMatrix_t > MKMatrix_u;
 template <class T>
 class MKMatrix : public MKVector<MKVector<T> > {
 public:
-    MKMatrix(std::size_t n = 0) {
+    MKMatrix(std::size_t n = 0) : MKVector<MKVector<T> >(n, MKVector<T>(n)) {
         /* this->array = std::vector<MKVector<MKVector<T> > >(); */
         /* this->array.resize(n); */
-        MKVector<MKVector<T> >(n, MKVector<float>(n));
-        std::cout << "MAT INST: " << n
-                  << " VEC INST: " << MKVector<MKVector<T> >::size() 
-                  << " THISINST: " << size()
+        /* MKVector<MKVector<T> >(n, MKVector<float>(n)); */
+        std::cout << "mat inst: " << n
+                  << " vec inst: " << MKVector<MKVector<T> >::size()
+                  << " this inst: " << size()
+                  << " this_prt inst: " << this->array.size()
                   << std::endl;
     }
 
     auto operator= (const MKMatrix<T>& v) -> MKMatrix<T>& {
-        /* std::cout << "MAT: PRE: THIS: " << size() << "  THAT: " << v.size() << std::endl; */
-        /* this->array = MKVector<MKVector<T> >::v.array; */
+        std::cout << "mat: pre: this: " << size() << "  that: " << v.size() << std::endl;
+
+        /* Not sure which is faster */
         MKVector<MKVector<T> >::array = v.array;
-        /* std::cout << "MAT: POST: THIS: " << size() << "  THAT: " << v.size() << std::endl; */
+        /* this->array = v.array; */
+
+        std::cout << "mat: post: this: " << size() << "  that: " << v.size() << std::endl;
+        return *this;
+    }
+
+    auto operator= (const T c) -> MKMatrix<T>& {
+        /* MKVector<MKVector<T> >::array = v.array; */
+        for (auto i=0 ; i<size(); ++i) {
+
+            /* Not sure which is faster */
+            MKVector<MKVector<T> >::array[i] = c;
+            /* this->array[i] = c; */
+        }
         return *this;
     }
 
     auto print_out() -> const std::string {
         std::stringstream stream;
-        stream << "TEST" << this->array.to_string();
+        stream << "test" << this->array.to_string();
         return stream.str();
     }
 
