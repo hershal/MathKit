@@ -7,6 +7,37 @@
 
 const float epsilon = pow(10, -6);
 
+auto MKGaussElim(MKMatrix_t &A, MKVector_t &b, MKVector_t &x) -> void {
+    std::size_t n = A.size();
+    std::size_t p;
+
+    if (n != b.size() || n != x.size()) {
+        throw std::length_error("Matrix-Vector-Vector lengths did not match");
+    }
+
+    MKMatrix_t A_cpy = MKVector<MKVector<float> >(n, MKVector<float>(n));
+    MKVector_t b_cpy = MKVector <float>(n);
+    A_cpy = A;
+    b_cpy = b;
+
+    for (auto k=0; k<n-1; ++k) {
+        p = MKGaussPivotIndex(A_cpy, k);
+
+        /* If we find a pivot here which is greater than the current
+           index, exchange rows */
+        if ((p>k) && (p<n)) {
+            MKGaussRowExchange(A_cpy, b_cpy, k, p);
+        }
+        MKGaussFwdElimination(A_cpy, b_cpy, k);
+    }
+
+    if (FLAlmostEqualRelative(A_cpy[n-1][n-1], 0.0, epsilon)) {
+        throw std::runtime_error("Infinitely Many Solutions");
+    }
+
+    MKGaussBwdSubstitution(A_cpy, b_cpy, x);
+}
+
 /*! \brief Searches for an appropriate pivot for Gaussian Elimination
 */
 auto MKGaussPivotIndex(MKMatrix_t &A, std::size_t k) -> std::size_t {
@@ -70,35 +101,3 @@ auto MKGaussBwdSubstitution(MKMatrix_t &A, MKVector_t &b, MKVector_t &x) -> void
         x[k] = (b[k] - tmp) / A[k][k];
     }
 }
-
-auto MKGaussElim(MKMatrix_t &A, MKVector_t &b, MKVector_t &x) -> void {
-    std::size_t n = A.size();
-    std::size_t p;
-
-    if (n != b.size() || n != x.size()) {
-        throw std::length_error("Matrix-Vector-Vector lengths did not match");
-    }
-
-    MKMatrix_t A_cpy = MKVector<MKVector<float> >(n, MKVector<float>(n));
-    MKVector_t b_cpy = MKVector <float>(n);
-    A_cpy = A;
-    b_cpy = b;
-
-    for (auto k=0; k<n-1; ++k) {
-        p = MKGaussPivotIndex(A_cpy, k);
-
-        /* If we find a pivot here which is greater than the current
-           index, exchange rows */
-        if ((p>k) && (p<n)) {
-            MKGaussRowExchange(A_cpy, b_cpy, k, p);
-        }
-        MKGaussFwdElimination(A_cpy, b_cpy, k);
-    }
-
-    if (FLAlmostEqualRelative(A_cpy[n-1][n-1], 0.0, epsilon)) {
-        throw std::runtime_error("Infinitely Many Solutions");
-    }
-
-    MKGaussBwdSubstitution(A_cpy, b_cpy, x);
-}
-
