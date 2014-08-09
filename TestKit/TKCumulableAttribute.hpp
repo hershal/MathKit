@@ -43,8 +43,8 @@ public:
         return this->attribute;
     }
 
-    auto to_string(const std::string pre_prefix,
-                   const std::string post_postfix)
+    auto to_string(const std::string pre_prefix = "",
+                   const std::string post_postfix = "")
         const -> const std::string {
 
         auto stream = std::stringstream();
