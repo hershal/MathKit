@@ -15,10 +15,9 @@
 int main() {
 
     std::size_t vector_len = 3;
-    MKMatrix_t mat = MKVector<MKVector<float> >
-        (vector_len, MKVector<float>(vector_len));
-    MKVector_t vec = MKVector <float>(vector_len);
-    MKVector_t sol = MKVector <float>(vector_len);
+    MKMatrix_t mat(vector_len);
+    MKVector_t vec(vector_len);
+    MKVector_t sol(vector_len);
 
     vec[0] = 5;
     vec[1] = 17;

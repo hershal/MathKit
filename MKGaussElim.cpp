@@ -15,8 +15,8 @@ auto MKGaussElim(MKMatrix_t &A, MKVector_t &b, MKVector_t &x) -> void {
         throw std::length_error("Matrix-Vector-Vector lengths did not match");
     }
 
-    MKMatrix_t A_cpy = MKVector<MKVector<float> >(n, MKVector<float>(n));
-    MKVector_t b_cpy = MKVector <float>(n);
+    MKMatrix_t A_cpy(n);
+    MKVector_t b_cpy(n);
     A_cpy = A;
     b_cpy = b;
 

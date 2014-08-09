@@ -5,10 +5,6 @@
 
 #include "MKVector.hpp"
 
-typedef MKVector< MKVector<float> > MKMatrix_t;
-typedef std::shared_ptr< MKMatrix_t > MKMatrix_p;
-typedef std::unique_ptr< MKMatrix_t > MKMatrix_u;
-
 template <class T>
 class MKMatrix : public MKVector<MKVector<T> > {
 public:
