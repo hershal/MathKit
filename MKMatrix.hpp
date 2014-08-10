@@ -32,6 +32,21 @@ public:
         return *this;
     }
 
+    auto operator() (const std::size_t i, const std::size_t j) const
+        -> const T { return (*this)(i)(j); }
+
+    auto operator* (const MKVector<T>& v) const -> MKVector<T> {
+        if(size() != v.size())
+            throw std::out_of_range("MKMatrix operator* index is invalid");
+        MKVector<T> result(v.size());
+        for(std::size_t i=0; i<size(); ++i) {
+            for (std::size_t j=0; j<size(); ++j) {
+                result(i) += (*this)(i,j)*v(j);
+            }
+        }
+        return result;
+    }
+
     auto print_out() -> const std::string {
         std::stringstream stream;
         stream << "test" << this->array.to_string();
