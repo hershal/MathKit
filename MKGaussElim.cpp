@@ -5,8 +5,6 @@
 #include "MKGaussElim.hpp"
 #include "FLFunctions.hpp"
 
-const float epsilon = pow(10, -6);
-
 auto MKGaussElim(MKMatrix_t &A, MKVector_t &b, MKVector_t &x) -> void {
     std::size_t n = A.size();
     std::size_t p;
@@ -31,7 +29,7 @@ auto MKGaussElim(MKMatrix_t &A, MKVector_t &b, MKVector_t &x) -> void {
         MKGaussFwdElimination(A_cpy, b_cpy, k);
     }
 
-    if (FLAlmostEqualRelative(A_cpy[n-1][n-1], 0.0, epsilon)) {
+    if (FLAlmostEqualRelative(A_cpy[n-1][n-1], 0.0, FLEpsilon)) {
         throw std::runtime_error("Infinitely Many Solutions");
     }
 
@@ -43,7 +41,7 @@ auto MKGaussElim(MKMatrix_t &A, MKVector_t &b, MKVector_t &x) -> void {
 auto MKGaussPivotIndex(MKMatrix_t &A, std::size_t k) -> std::size_t {
     std::size_t i = k;
     std::size_t n = A.size();
-    while ((i<n) && FLAlmostEqualRelative(A[i][k], 0.0, epsilon)) {
+    while ((i<n) && FLAlmostEqualRelative(A[i][k], 0.0, FLEpsilon)) {
         ++i;
     }
 
