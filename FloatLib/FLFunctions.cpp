@@ -2,14 +2,6 @@
 
 #include "FLFunctions.hpp"
 
-auto inline FLAbsoluteError(float a, float b) -> float {
-    return fabs(a - b);
-}
-
-auto inline FLRelativeError(float a, float b) -> float {
-    return fabs((a - b)/b);
-}
-
 /* Non-optimal: Not recommended */
 auto FLAlmostEqualRelative(float a, float b, float epsilon) -> bool {
 
@@ -31,6 +23,14 @@ auto FLAlmostEqualRelative(float a, float b, float epsilon) -> bool {
     }
 
     return false;
+}
+
+auto inline FLAbsoluteError(float a, float b) -> float {
+    return fabs(a - b);
+}
+
+auto inline FLRelativeError(float a, float b) -> float {
+    return fabs((a - b)/b);
 }
 
 /* Test if this is faster than FLSwap */
