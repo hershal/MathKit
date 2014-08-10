@@ -11,6 +11,9 @@
 
 #include "MKGaussElim.hpp"
 #include "TKCumulableAttribute.hpp"
+#include "FLFunctions.hpp"
+
+auto check_mat(MKMatrix_t &A, MKVector_t &b, MKVector_t &x) -> bool;
 
 int main() {
 
@@ -40,5 +43,28 @@ int main() {
     std::cout << sol.to_string(", ") << std::endl;
 
     std::cout << "test completed" << std::endl;
+
+    std::cout << "checking output" << std::endl;
+    if (check_mat(mat, vec, sol)) {
+        std::cout << "correct" << std::endl;
+    }
+    else {
+        std::cout << "incorrect" << std::endl;
+    }
+
     return 0;
+}
+
+auto check_mat(MKMatrix_t &A, MKVector_t &b, MKVector_t &x) -> bool {
+
+    MKVector_t b_approx = A*x;
+
+    std::cout << "approx\n" << b_approx.to_string() << std::endl;
+
+    for (std::size_t i=0; i<b.size(); ++i) {
+        if (!FLAlmostEqualRelative(b_approx(i), b(i))) {
+            return false;
+        }
+    }
+    return true;
 }
