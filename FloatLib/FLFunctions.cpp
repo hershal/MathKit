@@ -25,12 +25,12 @@ auto FLAlmostEqualRelative(float a, float b, float epsilon) -> bool {
     return false;
 }
 
-auto inline FLAbsoluteError(float a, float b) -> float {
-    return fabs(a - b);
-}
-
 auto inline FLRelativeError(float a, float b) -> float {
     return fabs((a - b)/b);
+}
+
+auto inline FLAbsoluteError(float a, float b) -> float {
+    return fabs(a - b);
 }
 
 /* Test if this is faster than FLSwap */
