@@ -60,8 +60,8 @@ auto MKGaussPivotIndex(MKMatrix_t &A, std::size_t k) -> std::size_t {
 }
 
 auto MKGaussRowExchange(MKMatrix_t &A, MKVector_t &b, std::size_t k, std::size_t p) -> void {
-    MKVector<float> tmp_A_val = A[k];
-    float tmp_b_val = b[k];
+    MKVector_t tmp_A_val = A[k];
+    math_t tmp_b_val = b[k];
 
     /* Possible speedup: Use an FLSwap method */
     b[k] = b[p];
@@ -76,7 +76,7 @@ auto MKGaussRowExchange(MKMatrix_t &A, MKVector_t &b, std::size_t k, std::size_t
   /param k the row index at which to start the forward elimination
  */
 auto MKGaussFwdElimination(MKMatrix_t &A, MKVector_t &b, std::size_t k) -> void {
-    float scaling_coef;
+    math_t scaling_coef;
     std::size_t n = A.size();
 
     /* std::cout << "FWD PRE " << k << "\n" */
@@ -101,14 +101,14 @@ auto MKGaussFwdElimination(MKMatrix_t &A, MKVector_t &b, std::size_t k) -> void 
 
 auto MKGaussBwdSubstitution(MKMatrix_t &A, MKVector_t &b, MKVector_t &x) -> void {
     std::size_t n = A.size();
-    float tmp;
+    math_t tmp;
 
     x[n-1] = b[n-1] / A[n-1][n-1];
 
     /* Due to the unsigned nature of k, I can't compare against --0 (-1) */
     for (std::size_t k=n-2; k<n-1; --k) {
         /* Possible speedup: cast to char* and use xor from
-           char*[0]..char*[sizeof(float)-1] */
+           char*[0]..char*[sizeof(math_t)-1] */
         tmp = 0.0;
 
         for (auto j=k+1; j<n; ++j) {
