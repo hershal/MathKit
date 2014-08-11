@@ -10,6 +10,12 @@
 
 #include <iostream>
 
+template <class F> struct abs_compare {
+    bool operator() (const F &one, const F &two) const {
+        return fabs(one) < fabs(two);
+    }
+};
+
 template <class T>
 class MKMatrix : public MKVector<MKVector<T> > {
 public:
@@ -45,9 +51,9 @@ public:
         if(size() != v.size())
             throw std::out_of_range("MKMatrix operator* index is invalid");
 
-        /* TODO: Change this to a Kahan Sum */
-        /* TODO: Change this to sort by absolute value */
-        auto addition_set = std::vector<std::set<float> >();
+        /* Should reduce roundoff errors by adding sequentially from
+           smallest to largest */
+        auto addition_set = std::vector<std::set<T, abs_compare<T> > >();
         addition_set.resize(v.size());
         MKVector<T> result(v.size());
 
@@ -58,10 +64,8 @@ public:
         }
         for (std::size_t i=0; i<result.size(); ++i) {
             /* num should be sorted since it's in a set */
-            /* TODO: Verify the above claim */
             for (const auto num : addition_set[i]) {
                 result(i) += num;
-                std::cout << i << ": " << num << "  " << std::endl;
             }
         }
         return result;
