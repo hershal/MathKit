@@ -3,7 +3,12 @@
 #ifndef MK_MATRIX
 #define MK_MATRIX
 
+#include <set>
+#include <vector>
+
 #include "MKVector.hpp"
+
+#include <iostream>
 
 template <class T>
 class MKMatrix : public MKVector<MKVector<T> > {
@@ -11,13 +16,9 @@ public:
     MKMatrix(std::size_t n = 0) : MKVector<MKVector<T> >(n, MKVector<T>(n)) { }
 
     auto operator= (const MKMatrix<T>& v) -> MKMatrix<T>& {
-        std::cout << "mat: pre: this: " << size() << "  that: " << v.size() << std::endl;
-
         /* Not sure which is faster */
         MKVector<MKVector<T> >::array = v.array;
         /* this->array = v.array; */
-
-        std::cout << "mat: post: this: " << size() << "  that: " << v.size() << std::endl;
         return *this;
     }
 

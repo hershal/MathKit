@@ -1,10 +1,7 @@
-/* MathKit MKMatirx Testing */
+/* MathKit MKMatrix Testing */
 
-#include <sstream>
-#include <iostream>
 #include <random>
 #include <ctime>
-
 #include <boost/assert.hpp>
 
 #include "MKMatrix.hpp"

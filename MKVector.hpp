@@ -6,7 +6,6 @@
 #include <vector>
 #include <string>
 #include <sstream>
-#include <iostream>
 
 template <class T>
 class MKVector {
@@ -23,8 +22,6 @@ public:
           That's just something you should be aware of before you use the
           default constructor.
         */
-        std::cout << "IMPLICIT INSTANTIATION" << std::endl;
-
         array.clear();
     }
 
@@ -100,10 +97,7 @@ public:
 
     /*! MKVector assignment operator */
     auto operator= (const MKVector<T>& v) -> MKVector<T>& {
-        std::cout << "VEC: PRE: THIS: " << size() << "  THAT: " << v.size() << std::endl;
         array = v.to_vector();
-        std::cout << "VEC: " << to_string() << std::endl;
-        std::cout << "VEC: POST: THIS: " << size() << "  THAT: " << v.size() << std::endl;
         return *this;
     }
 
