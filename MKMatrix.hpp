@@ -44,10 +44,24 @@ public:
     auto operator* (const MKVector<T>& v) const -> MKVector<T> {
         if(size() != v.size())
             throw std::out_of_range("MKMatrix operator* index is invalid");
+
+        /* TODO: Change this to a Kahan Sum */
+        /* TODO: Change this to sort by absolute value */
+        auto addition_set = std::vector<std::set<float> >();
+        addition_set.resize(v.size());
         MKVector<T> result(v.size());
+
         for(std::size_t i=0; i<size(); ++i) {
             for (std::size_t j=0; j<size(); ++j) {
-                result(i) += (*this)(i,j)*v(j);
+                addition_set[i].insert((*this)(i,j)*v(j));
+            }
+        }
+        for (std::size_t i=0; i<result.size(); ++i) {
+            /* num should be sorted since it's in a set */
+            /* TODO: Verify the above claim */
+            for (const auto num : addition_set[i]) {
+                result(i) += num;
+                std::cout << i << ": " << num << "  " << std::endl;
             }
         }
         return result;

@@ -1,6 +1,7 @@
 /* MathKit Gaussian Elimination Implemenation */
 
 #include <cmath>
+#include <iostream>
 
 #include "MKGaussElim.hpp"
 #include "FLFunctions.hpp"
@@ -24,7 +25,17 @@ auto MKGaussElim(MKMatrix_t &A, MKVector_t &b, MKVector_t &x) -> void {
         /* If we find a pivot here which is greater than the current
            index, exchange rows */
         if ((p>k) && (p<n)) {
+            /* std::cout << "ROWSWAP PRE\n" */
+            /*           << A_cpy.to_string() << "\n" */
+            /*           << b_cpy.to_string() << "\n" */
+            /*           << k << "\n" */
+            /*           << p << std::endl; */
             MKGaussRowExchange(A_cpy, b_cpy, k, p);
+            /* std::cout << "ROWSWAP POST\n" */
+            /*           << A_cpy.to_string() << "\n" */
+            /*           << b_cpy.to_string() << "\n" */
+            /*           << k << "\n" */
+            /*           << p << std::endl; */
         }
         MKGaussFwdElimination(A_cpy, b_cpy, k);
     }
@@ -59,6 +70,7 @@ auto MKGaussRowExchange(MKMatrix_t &A, MKVector_t &b, std::size_t k, std::size_t
     A[k] = A[p];
     A[p] = tmp_A_val;
 }
+
 /*! \brief Utilizes forward-elimination techniques to create an
            upper-triangular matrix.
   /param k the row index at which to start the forward elimination
@@ -66,6 +78,10 @@ auto MKGaussRowExchange(MKMatrix_t &A, MKVector_t &b, std::size_t k, std::size_t
 auto MKGaussFwdElimination(MKMatrix_t &A, MKVector_t &b, std::size_t k) -> void {
     float scaling_coef;
     std::size_t n = A.size();
+
+    /* std::cout << "FWD PRE " << k << "\n" */
+    /*           << A.to_string("\n") << "\n" */
+    /*           << b.to_string() << "\n" << std::endl; */
 
     for (auto i=k+1; i<n; ++i) {
         scaling_coef = (A[i][k])/(A[k][k]);
@@ -78,6 +94,9 @@ auto MKGaussFwdElimination(MKMatrix_t &A, MKVector_t &b, std::size_t k) -> void 
             A[i][j] -= scaling_coef * (A[k][j]);
         }
     }
+    /* std::cout << "FWD POST " << k << "\n" */
+    /*           << A.to_string("\n") << "\n" */
+    /*           << b.to_string() << "\n" << std::endl; */
 }
 
 auto MKGaussBwdSubstitution(MKMatrix_t &A, MKVector_t &b, MKVector_t &x) -> void {
