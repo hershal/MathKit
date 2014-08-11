@@ -33,6 +33,11 @@ public:
         return *this;
     }
 
+    /*! MKMatrix set-value operator */
+    auto operator() (const std::size_t i, const std::size_t j)
+        -> T& { return (*this)(i)(j); }
+
+    /*! MKMatrix get-value operator */
     auto operator() (const std::size_t i, const std::size_t j) const
         -> const T { return (*this)(i)(j); }
 
