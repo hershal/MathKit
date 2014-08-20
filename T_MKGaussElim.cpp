@@ -26,13 +26,18 @@ int main() {
 
     /* generate_data(A, b); */
 
-    A(0,0) = 0.0;   A(0,1) = -2.0;  A(0,2) = 16.0;
-    A(1,0) = 16.0;  A(1,1) = 0.0;   A(1,2) = -5.0;
-    A(2,0) = 16.0;  A(2,1) = -13.0; A(2,2) = 15.0;
-    b(0) = -20;     b(1) = 1;       b(2) = 0;
+    A(0,0) = 7.0;  A(0,1) = 4.0;  A(0,2) = 6.0;
+    A(1,0) = 0.0;  A(1,1) = 0.0;  A(1,2) = 0.0;
+    A(2,0) = 0.0;  A(2,1) = 0.0;  A(2,2) = -16.0;
+    b(0) = -15.0;  b(1) = -17.0;  b(2) = 0.0;
 
     try {
-    MKGaussElim(A, b, x);
+        MKGaussElim(A, b, x);
+    } catch (std::logic_error e) {
+        std::cout << "exception generated: " << e.what() << std::endl;
+        std::cout << "A\n" << A.to_string("\n") << std::endl;
+        std::cout << "x\n" << x.to_string() << std::endl;
+        return 0;
     } catch (std::exception e) {
         std::cout << "exception generated: " << e.what() << std::endl;
         std::cout << "A\n" << A.to_string("\n") << std::endl;

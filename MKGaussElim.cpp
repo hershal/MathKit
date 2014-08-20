@@ -24,7 +24,10 @@ auto MKGaussElim(MKMatrix_t &A, MKVector_t &b, MKVector_t &x) -> void {
 
         /* If we find a pivot here which is greater than the current
            index, exchange rows */
-        if ((p>k) && (p<n)) {
+        if ((p>k)) {
+            if (p >= n) {
+                throw std::logic_error("Matrix is Singular");
+            }
             MKGaussRowExchange(A_cpy, b_cpy, k, p);
         }
         MKGaussFwdElimination(A_cpy, b_cpy, k);
