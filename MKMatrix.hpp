@@ -61,7 +61,27 @@ public:
            the numbers in order of increasing magnitude */
         for (std::size_t i=0; i<size(); ++i) {
             for (std::size_t j=0; j<size(); ++j) {
-                addition_set[i].insert((*this)(i,j)*v(j));
+                const T in = (*this)(i,j)*v(j);
+
+                /* Why waste time adding a zero? */
+                if (in == 0) { continue; }
+
+                /* If the set has duplicates, then we must account for that here */
+                /* This is probably a bad approach: If I find a duplicate, I
+                   simply remove it and add a new value with the duplicate
+                   removed added to the current entry. Since we're using a set
+                   which uses floating point absolute values, if we get a number
+                   which is exactly the negative of an existing value, we'll
+                   remove that number and insert a zero (number-number = 0) */
+                const auto search = addition_set[i].find(in);
+                if (search != addition_set[i].end()) {
+                    const auto remove = (*search);
+
+                    addition_set[i].erase(in);
+                    addition_set[i].insert(in+remove);
+                } else {
+                    addition_set[i].insert(in);
+                }
             }
         }
 
