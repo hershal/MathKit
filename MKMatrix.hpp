@@ -57,11 +57,15 @@ public:
         addition_set.resize(v.size());
         MKVector<T> result(v.size());
 
-        for(std::size_t i=0; i<size(); ++i) {
+        /* To ensure that the solution is numerically stable, we add
+           the numbers in order of increasing magnitude */
+        for (std::size_t i=0; i<size(); ++i) {
             for (std::size_t j=0; j<size(); ++j) {
                 addition_set[i].insert((*this)(i,j)*v(j));
             }
         }
+
+        /* Here we actually add the numbers into the MKVector */
         for (std::size_t i=0; i<result.size(); ++i) {
             /* num should be sorted since it's in a set */
             for (const auto num : addition_set[i]) {
