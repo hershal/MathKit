@@ -41,7 +41,9 @@ auto MKGaussElim(MKMatrix_t &A, MKVector_t &b, MKVector_t &x) -> void {
 }
 
 /*! \brief Searches for an appropriate pivot for Gaussian Elimination
-*/
+  Finds the first nonzero entry of the row of a matrix and returns the
+  index of that row.
+ */
 auto MKGaussPivotIndex(MKMatrix_t &A, std::size_t k) -> std::size_t {
     std::size_t i = k;
     std::size_t n = A.size();
