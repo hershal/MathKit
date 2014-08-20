@@ -24,28 +24,35 @@ int main() {
     MKVector_t b(btor_len);
     MKVector_t x(btor_len);
 
-    // generate_data(A, b);
+    /* generate_data(A, b); */
 
     A(0,0) = 0.0;   A(0,1) = -2.0;  A(0,2) = 16.0;
     A(1,0) = 16.0;  A(1,1) = 0.0;   A(1,2) = -5.0;
     A(2,0) = 16.0;  A(2,1) = -13.0; A(2,2) = 15.0;
     b(0) = -20;     b(1) = 1;       b(2) = 0;
 
+    try {
     MKGaussElim(A, b, x);
+    } catch (std::exception e) {
+        std::cout << "exception generated: " << e.what() << std::endl;
+        std::cout << "A\n" << A.to_string("\n") << std::endl;
+        std::cout << "x\n" << x.to_string() << std::endl;
+        return 0;
+    }
 
     MKVector_t b_approx = A*x;
     std::cout << "b_actual " <<  b << "\nb_approx " << b_approx << std::endl;
 
     if (check_mat(A, b, b_approx)) {
         std::cout << "correct" << std::endl;
+        return 0;
     }
     else {
         std::cout << "incorrect" << std::endl;
         std::cout << "A\n" << A.to_string("\n") << std::endl;
         std::cout << "x\n" << x.to_string() << std::endl;
+        return 1;
     }
-
-    return 0;
 }
 
 auto generate_data(MKMatrix_t &A, MKVector_t &b) -> void {
