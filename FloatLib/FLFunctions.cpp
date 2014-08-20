@@ -1,9 +1,14 @@
 #include <cmath>
+#include <cfloat>
 
 #include "FLFunctions.hpp"
 
 /* Non-optimal: Not recommended */
 auto FLAlmostEqualRelative(float a, float b, float epsilon) -> bool {
+
+    const auto fa = fabs(a);
+    const auto fb = fabs(b);
+    const auto fdiff = FLAbsoluteError(a, b);
 
     /* Remove a division-by-zero possibility */
     if (a == b) {
@@ -12,7 +17,9 @@ auto FLAlmostEqualRelative(float a, float b, float epsilon) -> bool {
 
     /* We want to divide by the largest number to minimize roundoff error */
     float relative_error;
-    if (fabs(a) > fabs(b)) {
+    if (a == 0 || b == 0 || fdiff < FLT_MIN ) {
+        relative_error = fdiff * epsilon;
+    } else if (fa > fb) {
         relative_error = FLRelativeError(b, a);
     } else {
         relative_error = FLRelativeError(a, b);

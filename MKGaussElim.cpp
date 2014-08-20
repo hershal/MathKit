@@ -30,7 +30,7 @@ auto MKGaussElim(MKMatrix_t &A, MKVector_t &b, MKVector_t &x) -> void {
         MKGaussFwdElimination(A_cpy, b_cpy, k);
     }
 
-    if (FLAlmostEqualRelative(A_cpy[n-1][n-1], 0.0, FLEpsilon)) {
+    if (FLAlmostEqualRelative(A_cpy[n-1][n-1], 0.0)) {
         throw std::runtime_error("Infinitely Many Solutions");
     }
 
@@ -42,7 +42,8 @@ auto MKGaussElim(MKMatrix_t &A, MKVector_t &b, MKVector_t &x) -> void {
 auto MKGaussPivotIndex(MKMatrix_t &A, std::size_t k) -> std::size_t {
     std::size_t i = k;
     std::size_t n = A.size();
-    while ((i<n) && FLAlmostEqualRelative(A[i][k], 0.0, FLEpsilon)) {
+
+    while ((i<n) && FLAlmostEqualRelative(A[i][k], 0.0)) {
         ++i;
     }
 
