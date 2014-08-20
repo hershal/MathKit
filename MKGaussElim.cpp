@@ -26,7 +26,7 @@ auto MKGaussElim(MKMatrix_t &A, MKVector_t &b, MKVector_t &x) -> void {
            index, exchange rows */
         if ((p>k)) {
             if (p >= n) {
-                throw std::logic_error("Matrix is Singular");
+                throw std::logic_error("MKGaussElim: Matrix is Singular");
             }
             MKGaussRowExchange(A_cpy, b_cpy, k, p);
         }
@@ -34,7 +34,7 @@ auto MKGaussElim(MKMatrix_t &A, MKVector_t &b, MKVector_t &x) -> void {
     }
 
     if (FLAlmostEqualRelative(A_cpy[n-1][n-1], 0.0)) {
-        throw std::runtime_error("Infinitely Many Solutions");
+        throw std::logic_error("MKGaussElim: Infinitely Many Solutions");
     }
 
     MKGaussBwdSubstitution(A_cpy, b_cpy, x);
